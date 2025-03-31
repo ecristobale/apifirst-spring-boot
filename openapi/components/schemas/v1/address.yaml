@@ -1,0 +1,21 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: Unique identifier of the address
+  addressLine1:
+    type: string
+    description: Address line 1
+  addressLine2:
+    type: string
+    description: Address line 2
+  city:
+    type: string
+    description: City
+  state:
+    type: string
+    description: State
+  zip:
+    type: string
+    description: Zip Code
