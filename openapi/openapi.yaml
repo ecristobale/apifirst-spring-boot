@@ -14,10 +14,10 @@ info:
   description: |-
     This is a **example** to demonstrate features of OpenAPI 3.0 specification.
 tags:
+  - name: Customer
+    description: Customer operations
   - name: User
     description: Operations about user
-#   - name: Echo
-#     description: Everything about your user
 #   - name: Tag
 #     description: this is a tag description
 servers:
@@ -29,13 +29,17 @@ servers:
   - url: https://example.com/api/v1
 paths:
   /users/{username}:
-    $ref: paths/users_{username}.yml
+    $ref: paths/users_{username}.yaml
+  /v1/customers:
+    $ref: paths/v1/customers.yaml
   # /echo:
   #   $ref: paths/echo.yaml
   # /pathItem:
   #   $ref: paths/pathItem.yaml
   # /pathItemWithExamples:
   #   $ref: paths/pathItemWithExamples.yaml
+security:
+  - basic_auth: []
 components:
   securitySchemes:
     main_auth:
