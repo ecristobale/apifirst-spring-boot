@@ -1,0 +1,26 @@
+get:
+  tags:
+    - Customer
+  summary: Get a customer by ID
+  description: |
+    Get a customer by ID.
+  operationId: getCustomerById
+  parameters:
+    - name: customer_id
+      in: path
+      required: true
+      description: The ID of the customer to retrieve.
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/customer.yaml
+    '400':
+      description: Bad Request
+    '404':
+      description: Not Found
