@@ -1,0 +1,6 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: unique identifier of the order

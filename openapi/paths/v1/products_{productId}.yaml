@@ -6,7 +6,7 @@ get:
     Get a product by ID.
   operationId: getProductById
   parameters:
-    - name: product_id
+    - name: productId
       in: path
       required: true
       description: The ID of the product to retrieve.

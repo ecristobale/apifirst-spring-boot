@@ -1,4 +1,4 @@
-openapi: 3.0.4
+openapi: 3.1.0
 info:
   version: 1.0.0
   title: API First with Spring Boot 
@@ -12,12 +12,14 @@ info:
   x-logo:
     url: https://avatars.githubusercontent.com/u/29001205?v=4
   description: |-
-    This is a **example** to demonstrate features of OpenAPI 3.0 specification.
+    This is a **example** to demonstrate features of OpenAPI 3.1 specification.
 tags:
   - name: Customer
     description: Customer operations
   - name: Product
     description: Product operations
+  - name: Order
+    description: Order operations
 servers:
   - url: https://{tenant}/api/v1
     variables:
@@ -29,11 +31,15 @@ paths:
   /v1/customers:
     $ref: paths/v1/customers.yaml
   /v1/customers/{customerId}:
-    $ref: paths/v1/customers_{customer_id}.yaml
+    $ref: paths/v1/customers_{customerId}.yaml
   /v1/products:
     $ref: paths/v1/products.yaml
   /v1/products/{productId}:
-    $ref: paths/v1/products_{product_id}.yaml
+    $ref: paths/v1/products_{productId}.yaml
+  /v1/orders:
+    $ref: paths/v1/orders.yaml
+  /v1/orders/{orderId}:
+    $ref: paths/v1/orders_{orderId}.yaml
 security:
   - basic_auth: []
 components:
