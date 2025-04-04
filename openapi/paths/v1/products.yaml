@@ -1,8 +1,8 @@
 get:
   tags:
     - Product
-  summary: Get all products
-  description: Get all products
+  summary: Get a list of products
+  description: Get a list of products
   operationId: listProducts # Unique operation ID
   responses:
     '200':

@@ -34,16 +34,10 @@ paths:
     $ref: paths/v1/customers.yaml
   /v1/customers/{customerId}:
     $ref: paths/v1/customers_{customer_id}.yaml
-  /v1/products/:
+  /v1/products:
     $ref: paths/v1/products.yaml
   /v1/products/{productId}:
     $ref: paths/v1/products_{product_id}.yaml
-  # /echo:
-  #   $ref: paths/echo.yaml
-  # /pathItem:
-  #   $ref: paths/pathItem.yaml
-  # /pathItemWithExamples:
-  #   $ref: paths/pathItemWithExamples.yaml
 security:
   - basic_auth: []
 components:
