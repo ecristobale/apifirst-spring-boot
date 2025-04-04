@@ -18,8 +18,6 @@ tags:
     description: Customer operations
   - name: Product
     description: Product operations
-  - name: User
-    description: Operations about user
 servers:
   - url: https://{tenant}/api/v1
     variables:
@@ -28,8 +26,6 @@ servers:
         description: Your tenant id
   - url: https://example.com/api/v1
 paths:
-  /users/{username}:
-    $ref: paths/users_{username}.yaml
   /v1/customers:
     $ref: paths/v1/customers.yaml
   /v1/customers/{customerId}:
