@@ -1,0 +1,26 @@
+get:
+  tags:
+    - Product
+  summary: Get a product by ID
+  description: |
+    Get a product by ID.
+  operationId: getProductById
+  parameters:
+    - name: product_id
+      in: path
+      required: true
+      description: The ID of the product to retrieve.
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/product.yaml
+    '400':
+      description: Bad Request
+    '404':
+      description: Not Found

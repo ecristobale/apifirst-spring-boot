@@ -1,0 +1,19 @@
+get:
+  tags:
+    - Product
+  summary: Get all products
+  description: Get all products
+  operationId: listProducts # Unique operation ID
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/product_list.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/Problem.yaml

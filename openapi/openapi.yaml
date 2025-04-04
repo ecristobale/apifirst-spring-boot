@@ -16,10 +16,10 @@ info:
 tags:
   - name: Customer
     description: Customer operations
+  - name: Product
+    description: Product operations
   - name: User
     description: Operations about user
-#   - name: Tag
-#     description: this is a tag description
 servers:
   - url: https://{tenant}/api/v1
     variables:
@@ -32,6 +32,12 @@ paths:
     $ref: paths/users_{username}.yaml
   /v1/customers:
     $ref: paths/v1/customers.yaml
+  /v1/customers/{customerId}:
+    $ref: paths/v1/customers_{customer_id}.yaml
+  /v1/products/:
+    $ref: paths/v1/products.yaml
+  /v1/products/{productId}:
+    $ref: paths/v1/products_{product_id}.yaml
   # /echo:
   #   $ref: paths/echo.yaml
   # /pathItem:
