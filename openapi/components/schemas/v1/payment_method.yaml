@@ -4,6 +4,7 @@ properties:
     type: string
     format: uuid
     description: Unique identifier of the payment method
+    readOnly: true
   displayName:
     type: string
     description: Display name of the payment method
@@ -30,7 +31,15 @@ properties:
     type: string
     format: date-time
     description: Date when the payment method was created
+    readOnly: true
   dateUpdated:
     type: string
     format: date-time
     description: Date when the payment method was last updated
+    readOnly: true
+required:
+  - displayName
+  - cardNumber
+  - expiryMonth
+  - expiryYear
+  - cvv

@@ -12,12 +12,12 @@ properties:
   billToAddress:
     $ref: address.yaml
   email:
-    type: string
+    type: [string, 'null']
     maxLength: 255
     minLength: 5
     example: edu_ce_1988@hotmail.com
   phone:
-    type: string
+    type: [string, 'null']
     maxLength: 15
     minLength: 7
     example: 123-45-67-89
