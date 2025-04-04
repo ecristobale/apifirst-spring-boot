@@ -4,17 +4,27 @@ properties:
     type: string
     format: uuid
     description: The unique identifier of the image
+    readOnly: true
   url:
     type: string
     format: url
-    description: The url of the image 
+    description: The url of the image
+    minLength: 5
+    maxLength: 500
+    example: https://raw.githubusercontent.com/ecristobale/apifirst-spring-boot/refs/heads/main/DDD%20design/Entidad%20Customer%20Programacion%20con%20Value%20Objects%20y%20objetos.png
   altText:
-    type: string   
+    type: [string, 'null']
+    minLength: 3
+    maxLength: 255
   dateCreated:
     type: string
     format: date-time
     description: The date the image was created
+    readOnly: true
   dateUpdated:
     type: string
     format: date-time
-    description: The date the image was updated  
+    description: The date the image was updated
+    readOnly: true
+required:
+  - url

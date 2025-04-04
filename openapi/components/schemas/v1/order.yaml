@@ -4,12 +4,17 @@ properties:
     type: string
     format: uuid
     description: unique identifier of the order
+    readOnly: true
   customer:
     $ref: order_customer.yaml
   orderStatus:
     type: string
+    enum: [NEW, HOLD, SHIPPED, DELIVERED, CLOSED]
+    default: NEW
   shipmentInfo:
     type: string
+    minLength: 1
+    maxLength: 255
   orderLines:
     type: array
     items:
@@ -19,7 +24,13 @@ properties:
     type: string
     format: date-time
     description: The date the order was created
+    readOnly: true
   dateUpdated:
     type: string
     format: date-time
     description: The date the order was updated
+    readOnly: true
+required:
+  - customer
+  - orderLines
+  - orderStatus
