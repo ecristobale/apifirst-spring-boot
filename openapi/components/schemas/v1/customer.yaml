@@ -25,6 +25,10 @@ properties:
     type: array
     items: 
       $ref: payment_method.yaml
+  dateCreated:
+    $ref: ../common/iso_timestamp.yaml
+  dateUpdated:
+    $ref: ../common/iso_timestamp.yaml
 required:
   - name
   - shipToAddress

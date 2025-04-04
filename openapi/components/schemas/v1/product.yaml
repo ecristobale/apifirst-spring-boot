@@ -24,10 +24,6 @@ properties:
     type: string
     pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
   dateCreated:
-    type: string
-    format: date-time
-    description: The date the product was created
+    $ref: ../common/iso_timestamp.yaml
   dateUpdated:
-    type: string
-    format: date-time
-    description: The date the product was updated  
+    $ref: ../common/iso_timestamp.yaml

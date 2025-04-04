@@ -18,15 +18,9 @@ properties:
     maxLength: 255
     example: Electronics and gadgets
   dateCreated:
-    type: string
-    format: date-time
-    description: The date the category was created
-    readOnly: true
+    $ref: ../common/iso_timestamp.yaml
   dateUpdated:
-    type: string
-    format: date-time
-    description: The date the category was updated
-    readOnly: true
+    $ref: ../common/iso_timestamp.yaml
 required: 
   - category
   - description
