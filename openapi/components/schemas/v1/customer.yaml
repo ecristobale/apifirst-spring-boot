@@ -12,8 +12,12 @@ properties:
     $ref: address.yaml
   email:
     type: string
+    maxLength: 255
+    minLength: 5
   phone:
     type: string
+    maxLength: 15
+    minLength: 7
   paymentMethods:
     type: array
     items: 

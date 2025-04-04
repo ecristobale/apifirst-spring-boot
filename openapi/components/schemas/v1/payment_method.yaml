@@ -3,9 +3,12 @@ properties:
   id:
     type: string
     format: uuid
+    description: Unique identifier of the payment method
   displayName:
     type: string
     description: Display name of the payment method
+    minLength: 2
+    maxLength: 100
   cardNumber:
     type: integer
     description: Card number of the payment method
