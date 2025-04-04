@@ -4,3 +4,22 @@ properties:
     type: string
     format: uuid
     description: unique identifier of the order
+  customer:
+    $ref: order_customer.yaml
+  orderStatus:
+    type: string
+  shipmentInfo:
+    type: string
+  orderLines:
+    type: array
+    items:
+      $ref: order_line.yaml
+    description: The order lines of the order
+  dateCreated:
+    type: string
+    format: date-time
+    description: The date the order was created
+  dateUpdated:
+    type: string
+    format: date-time
+    description: The date the order was updated

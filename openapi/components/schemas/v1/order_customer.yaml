@@ -12,9 +12,10 @@ properties:
     $ref: address.yaml
   email:
     type: string
+    description: The email of the customer
   phone:
     type: string
-  paymentMethods:
-    type: array
-    items: 
-      $ref: payment_method.yaml
+    description: The phone of the customer
+  selectedPaymentMethod:
+    type: string
+    $ref: payment_method.yaml
