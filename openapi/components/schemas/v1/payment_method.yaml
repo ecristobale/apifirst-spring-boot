@@ -9,18 +9,23 @@ properties:
     description: Display name of the payment method
     minLength: 2
     maxLength: 100
+    example: My Credit Card
   cardNumber:
     type: integer
     description: Card number of the payment method
+    example: 1234567890123456
   expiryMonth:
     type: integer
     description: Expiry month of the payment method
+    example: 12
   expiryYear:
     type: integer
     description: Expiry year of the payment method
+    example: 25
   cvv:
     type: integer
     description: CVV of the payment method
+    example: 123
   dateCreated:
     type: string
     format: date-time
