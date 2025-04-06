@@ -34,6 +34,16 @@
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
         </dependency>
+        <!--  hibernate validator-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -59,6 +69,8 @@
                             <generateApis>false</generateApis>
                             <configOptions>
                                 <sourceFolder>src/gen/java/main</sourceFolder>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useBeanValidation>true</useBeanValidation>
                             </configOptions>
                         </configuration>
                     </execution>
