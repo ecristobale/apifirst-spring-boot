@@ -67,6 +67,7 @@
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <generateAliasAsModel>false</generateAliasAsModel>
                             <generateApis>false</generateApis>
+                            <modelPackage>com.ecristobale.apifirst.model</modelPackage>
                             <configOptions>
                                 <sourceFolder>src/gen/java/main</sourceFolder>
                                 <useJakartaEe>true</useJakartaEe>
