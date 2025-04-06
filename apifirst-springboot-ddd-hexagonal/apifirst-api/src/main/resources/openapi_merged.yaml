@@ -96,8 +96,10 @@ components:
           maxLength: 15
           minLength: 7
           example: 123-45-67-89
-        payment_method:
-          $ref: '#/components/schemas/payment_method'
+        paymentMethods:
+          type: array
+          items:
+            $ref: '#/components/schemas/payment_method'
         dateCreated:
           $ref: '#/components/schemas/iso_timestamp'
         dateUpdated:
