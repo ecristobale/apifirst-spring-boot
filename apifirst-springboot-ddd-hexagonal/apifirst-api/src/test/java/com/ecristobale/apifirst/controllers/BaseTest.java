@@ -1,5 +1,6 @@
 package com.ecristobale.apifirst.controllers;
 
+import com.ecristobale.apifirst.model.Customer;
 import com.ecristobale.apifirst.repositories.CustomerRepository;
 import com.ecristobale.apifirst.repositories.OrderRepository;
 import com.ecristobale.apifirst.repositories.ProductRepository;
@@ -23,8 +24,11 @@ public class BaseTest {
 
     public MockMvc mockMvc;
 
+    Customer testCustomer;
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+        testCustomer = customerRepository.findAll().iterator().next();
     }
 }
