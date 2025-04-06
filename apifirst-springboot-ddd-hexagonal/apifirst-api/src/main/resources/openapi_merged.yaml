@@ -258,19 +258,19 @@ components:
       type: object
       properties:
         length:
-          type: number
+          type: integer # number for BigDecimal
           description: The length of the product
           minimum: 1
           maximum: 999
           example: 10
         width:
-          type: number
+          type: integer # number for BigDecimal
           description: The width of the product
           minimum: 1
           maximum: 999
           example: 10
         height:
-          type: number
+          type: integer # number for BigDecimal
           description: The height of the product
           minimum: 1
           maximum: 999
@@ -393,13 +393,13 @@ components:
         product:
           $ref: '#/components/schemas/order_product'
         order_quantity:
-          type: integer
+          type: integer # number for BigDecimal
           description: The quantity of the product in the order
           minimum: 1
           maximum: 10000
           example: 10
         ship_quantity:
-          type: integer
+          type: integer # number for BigDecimal
           description: The quantity of the product shipped
           minimum: 1
           maximum: 10000
