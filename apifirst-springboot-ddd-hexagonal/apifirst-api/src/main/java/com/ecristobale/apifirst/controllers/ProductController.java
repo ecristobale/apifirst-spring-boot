@@ -19,7 +19,7 @@ import static com.ecristobale.apifirst.controllers.ProductController.BASE_PATH;
 @RequiredArgsConstructor
 @RequestMapping(BASE_PATH)
 public class ProductController {
-    public static final String BASE_PATH = "api/v1/products";
+    public static final String BASE_PATH = "/api/v1/products";
 
     private final ProductService productService;
 

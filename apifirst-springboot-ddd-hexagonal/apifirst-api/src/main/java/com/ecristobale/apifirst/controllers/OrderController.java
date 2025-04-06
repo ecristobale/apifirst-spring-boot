@@ -20,7 +20,7 @@ import static com.ecristobale.apifirst.controllers.OrderController.BASE_PATH;
 @RequestMapping(BASE_PATH)
 public class OrderController {
 
-    public static final String BASE_PATH = "api/v1/orders";
+    public static final String BASE_PATH = "/api/v1/orders";
 
     private final OrderService orderService;
 
