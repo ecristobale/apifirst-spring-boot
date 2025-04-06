@@ -11,6 +11,7 @@
 	<groupId>com.ecristobale</groupId>
 	<artifactId>apifirst-springboot-ddd-hexagonal</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>apifirst-springboot-ddd-hexagonal</name>
 	<description>API First with DDD Hexagonal Spring Boot 3</description>
 	<url/>
@@ -20,6 +21,9 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>apifirst-api</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>

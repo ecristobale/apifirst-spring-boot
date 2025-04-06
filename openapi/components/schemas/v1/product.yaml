@@ -8,7 +8,7 @@ properties:
     type: string
     description: The description of the product 
   dimentions:
-    $ref: dimentions.yaml
+    $ref: dimensions.yaml
   categories:
     type: array
     items: 
