@@ -1,10 +1,9 @@
 package com.ecristobale.apifirst.bootstrap;
 
-import com.ecristobale.apifirst.model.Address;
-import com.ecristobale.apifirst.model.Customer;
-import com.ecristobale.apifirst.model.Name;
-import com.ecristobale.apifirst.model.PaymentMethod;
+import com.ecristobale.apifirst.model.*;
 import com.ecristobale.apifirst.repositories.CustomerRepository;
+import com.ecristobale.apifirst.repositories.OrderRepository;
+import com.ecristobale.apifirst.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,8 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -26,7 +27,7 @@ public class DataLoader implements CommandLineRunner {
                 .zip("33701")
                 .build();
 
-        Customer customer1 = Customer.builder()
+        Customer savedCustomer1 = Customer.builder()
                 .name(Name.builder()
                         .firstName("John")
                         .lastName("Doe")
@@ -51,7 +52,7 @@ public class DataLoader implements CommandLineRunner {
                 .zip("33701")
                 .build();
 
-        Customer customer2 = Customer.builder()
+        Customer savedCustomer2 = Customer.builder()
                 .name(Name.builder()
                         .firstName("Ecristobale")
                         .lastName("Ecristobalee")
@@ -69,7 +70,111 @@ public class DataLoader implements CommandLineRunner {
                         .build()))
                 .build();
 
-        customerRepository.save(customer1);
-        customerRepository.save(customer2);
+        customerRepository.save(savedCustomer1);
+        customerRepository.save(savedCustomer2);
+        Product product1 = Product.builder()
+                .description("Product 1")
+                .categories(List.of(Category.builder()
+                        .category("Category 1")
+                        .description("Category 1 Description")
+                        .build()))
+                .cost("12.99")
+                .price("14.99")
+                .dimensions(Dimensions.builder()
+                        .height(1)
+                        .length(2)
+                        .width(3)
+                        .build())
+                .images(List.of(Image.builder()
+                        .url("http://example.com/image1")
+                        .altText("Image 1")
+                        .build()))
+                .build();
+
+        Product product2 = Product.builder()
+                .description("Product 2")
+                .categories(List.of(Category.builder()
+                        .category("Category 2")
+                        .description("Category 2 Description")
+                        .build()))
+                .cost("12.99")
+                .price("14.99")
+                .dimensions(Dimensions.builder()
+                        .height(1)
+                        .length(2)
+                        .width(3)
+                        .build())
+                .images(List.of(Image.builder()
+                        .url("http://example.com/image2")
+                        .altText("Image 2")
+                        .build()))
+                .build();
+
+        Product savedProduct1 = productRepository.save(product1);
+        Product savedProduct2 = productRepository.save(product2);
+
+        Order order1 = Order.builder()
+                .customer(OrderCustomer.builder()
+                        .id(savedCustomer1.getId())
+                        .name(savedCustomer1.getName())
+                        .billToAddress(savedCustomer1.getBillToAddress())
+                        .shipToAddress(savedCustomer1.getShipToAddress())
+                        .phone(savedCustomer1.getPhone())
+                        .paymentMethod(savedCustomer1.getPaymentMethods().get(0))
+                        .build())
+                .orderStatus(Order.OrderStatusEnum.NEW)
+                .shipmentInfo("shipment info")
+                .orderLines(List.of(OrderLine.builder()
+                                .product(OrderProduct.builder()
+                                        .id(savedProduct1.getId())
+                                        .description(product1.getDescription())
+                                        .price(product1.getPrice())
+                                        .build())
+                                .orderQuantity(1)
+                                .shipQuantity(1)
+                                .build(),
+                        OrderLine.builder()
+                                .product(OrderProduct.builder()
+                                        .id(savedProduct2.getId())
+                                        .description(product2.getDescription())
+                                        .price(product1.getPrice())
+                                        .build())
+                                .orderQuantity(1)
+                                .shipQuantity(1)
+                                .build()))
+                .build();
+
+        Order order2 = Order.builder()
+                .customer(OrderCustomer.builder()
+                        .id(savedCustomer2.getId())
+                        .billToAddress(savedCustomer2.getBillToAddress())
+                        .shipToAddress(savedCustomer2.getShipToAddress())
+                        .phone(savedCustomer2.getPhone())
+                        .paymentMethod(savedCustomer2.getPaymentMethods().get(0))
+                        .build())
+                .orderStatus(Order.OrderStatusEnum.NEW)
+                .shipmentInfo("shipment info #2")
+                .orderLines(List.of(OrderLine.builder()
+                                .product(OrderProduct.builder()
+                                        .id(savedProduct1.getId())
+                                        .description(product1.getDescription())
+                                        .price(product1.getPrice())
+                                        .build())
+                                .orderQuantity(1)
+                                .shipQuantity(1)
+                                .build(),
+                        OrderLine.builder()
+                                .product(OrderProduct.builder()
+                                        .id(savedProduct2.getId())
+                                        .description(product2.getDescription())
+                                        .price(product1.getPrice())
+                                        .build())
+                                .orderQuantity(1)
+                                .shipQuantity(1)
+                                .build()))
+                .build();
+
+        orderRepository.save(order1);
+        orderRepository.save(order2);
     }
 }
