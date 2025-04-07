@@ -6,6 +6,7 @@ import com.ecristobale.apifirst.model.Product;
 import com.ecristobale.apifirst.repositories.CustomerRepository;
 import com.ecristobale.apifirst.repositories.OrderRepository;
 import com.ecristobale.apifirst.repositories.ProductRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,6 +26,9 @@ public class BaseTest {
     WebApplicationContext wac;
 
     public MockMvc mockMvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     Customer testCustomer;
     Product testProduct;
