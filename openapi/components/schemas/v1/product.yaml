@@ -4,6 +4,7 @@ properties:
     type: string
     format: uuid
     description: The unique identifier of the product
+    nullable: true
   description:
     type: string
     description: The description of the product 
