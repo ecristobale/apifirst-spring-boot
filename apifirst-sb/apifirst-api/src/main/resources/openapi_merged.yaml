@@ -385,7 +385,7 @@ components:
           type: string
           description: The phone number of the customer
           example: 123-45-67-89
-        payment_method:
+        selected_payment_method:
           $ref: '#/components/schemas/payment_method'
     order_line:
       type: object
