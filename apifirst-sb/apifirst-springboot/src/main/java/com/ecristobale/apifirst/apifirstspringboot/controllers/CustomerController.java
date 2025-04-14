@@ -2,13 +2,14 @@ package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
 import com.ecristobale.apifirst.model.Customer;
 import com.ecristobale.apifirst.apifirstspringboot.services.CustomerService;
+import com.ecristobale.apifirst.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,5 +30,15 @@ public class CustomerController {
     @GetMapping("{customerId}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("customerId") UUID customerId) {
         return ResponseEntity.ok(customerService.getCustomerById(customerId));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> saveNewCustomer(@RequestBody Customer customer) {
+        Customer savedCustomer = customerService.saveNewCustomer(customer);
+
+        UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{customerId}" )
+                .buildAndExpand(savedCustomer.getId());
+
+        return ResponseEntity.created(URI.create(uriComponents.getPath())).build();
     }
 }
