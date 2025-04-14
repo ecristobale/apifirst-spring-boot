@@ -18,7 +18,8 @@ properties:
     description: The quantity of the product shipped  
     minimum: 1
     maximum: 10000
-    example: 10  
+    nullable: true
+    example: 10
   dateCreated:
     $ref: ../common/iso_timestamp.yaml
   dateUpdated:
