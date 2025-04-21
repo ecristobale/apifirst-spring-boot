@@ -1,6 +1,6 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.Product;
+import com.ecristobale.apifirst.model.ProductDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +22,18 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> listProducts(){
+    public ResponseEntity<List<ProductDto>> listProducts(){
         return ResponseEntity.ok(productService.listProducts());
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable("productId") UUID productId) {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("productId") UUID productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveNewProduct(@RequestBody Product product) {
-        Product savedProduct = productService.saveNewProduct(product);
+    public ResponseEntity<Void> saveNewProduct(@RequestBody ProductDto product) {
+        ProductDto savedProduct = productService.saveNewProduct(product);
 
         UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{productId}" )
                 .buildAndExpand(savedProduct.getId());

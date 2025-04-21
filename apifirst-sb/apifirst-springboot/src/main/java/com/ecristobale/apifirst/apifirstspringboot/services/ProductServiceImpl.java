@@ -1,7 +1,7 @@
 package com.ecristobale.apifirst.apifirstspringboot.services;
 
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ProductRepository;
-import com.ecristobale.apifirst.model.Product;
+import com.ecristobale.apifirst.model.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +16,21 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public List<Product> listProducts() {
-        return StreamSupport.stream(productRepository.findAll().spliterator(), false)
-                .toList();
+    public List<ProductDto> listProducts() {
+//        return StreamSupport.stream(productRepository.findAll().spliterator(), false)
+//                .toList();
+        return null;
     }
 
     @Override
-    public Product getProductById(UUID productId) {
-        return productRepository.findById(productId).orElseThrow();
+    public ProductDto getProductById(UUID productId) {
+//        return productRepository.findById(productId).orElseThrow();
+        return null;
     }
 
     @Override
-    public Product saveNewProduct(Product product) {
-        return productRepository.save(product);
+    public ProductDto saveNewProduct(ProductDto product) {
+//        return productRepository.save(product);
+        return null;
     }
 }

@@ -1,11 +1,11 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
+import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
+import com.ecristobale.apifirst.apifirstspringboot.domain.Order;
+import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ProductRepository;
-import com.ecristobale.apifirst.model.Customer;
-import com.ecristobale.apifirst.model.Order;
-import com.ecristobale.apifirst.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

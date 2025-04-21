@@ -1,8 +1,7 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.Customer;
+import com.ecristobale.apifirst.model.CustomerDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.CustomerService;
-import com.ecristobale.apifirst.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +22,18 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<List<Customer>> listCustomers() {
+    public ResponseEntity<List<CustomerDto>> listCustomers() {
         return ResponseEntity.ok(customerService.listCustomers());
     }
 
     @GetMapping("{customerId}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable("customerId") UUID customerId) {
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("customerId") UUID customerId) {
         return ResponseEntity.ok(customerService.getCustomerById(customerId));
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveNewCustomer(@RequestBody Customer customer) {
-        Customer savedCustomer = customerService.saveNewCustomer(customer);
+    public ResponseEntity<Void> saveNewCustomer(@RequestBody CustomerDto customer) {
+        CustomerDto savedCustomer = customerService.saveNewCustomer(customer);
 
         UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{customerId}" )
                 .buildAndExpand(savedCustomer.getId());

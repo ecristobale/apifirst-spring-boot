@@ -1,9 +1,9 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.Category;
-import com.ecristobale.apifirst.model.Dimensions;
-import com.ecristobale.apifirst.model.Image;
-import com.ecristobale.apifirst.model.Product;
+import com.ecristobale.apifirst.model.CategoryDto;
+import com.ecristobale.apifirst.model.DimensionsDto;
+import com.ecristobale.apifirst.model.ImageDto;
+import com.ecristobale.apifirst.model.ProductDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,19 +23,19 @@ class ProductControllerTest extends BaseTest {
     @DisplayName("Test Create Product")
     @Test
     void testCreateProduct() throws Exception {
-        Product newProduct = Product.builder()
+        ProductDto newProduct = ProductDto.builder()
                 .description("New Product")
                 .cost("5.00")
                 .price("8.95")
-                .categories(Arrays.asList(Category.builder()
+                .categories(Arrays.asList(CategoryDto.builder()
                         .category("New Category")
                         .description("New Category Description")
                         .build()))
-                .images(Arrays.asList(Image.builder()
+                .images(Arrays.asList(ImageDto.builder()
                         .url("http://example.com/image.jpg")
                         .altText("Image Alt Text")
                         .build()))
-                .dimensions(Dimensions.builder()
+                .dimensions(DimensionsDto.builder()
                         .length(10)
                         .width(10)
                         .height(10)

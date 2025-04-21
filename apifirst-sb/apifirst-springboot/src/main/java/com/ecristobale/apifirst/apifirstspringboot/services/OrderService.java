@@ -1,15 +1,15 @@
 package com.ecristobale.apifirst.apifirstspringboot.services;
 
-import com.ecristobale.apifirst.model.Order;
-import com.ecristobale.apifirst.model.OrderCreate;
+import com.ecristobale.apifirst.model.OrderDto;
+import com.ecristobale.apifirst.model.OrderCreateDto;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface OrderService {
-    List<Order> listOrders();
+    List<OrderDto> listOrders();
 
-    Order getOrderById(UUID orderId);
+    OrderDto getOrderById(UUID orderId);
 
-    Order saveNewCustomer(OrderCreate orderCreate);
+    OrderDto saveNewCustomer(OrderCreateDto orderCreate);
 }

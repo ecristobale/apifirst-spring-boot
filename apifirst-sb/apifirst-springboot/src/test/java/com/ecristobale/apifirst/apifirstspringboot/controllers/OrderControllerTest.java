@@ -1,8 +1,7 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.Order;
-import com.ecristobale.apifirst.model.OrderCreate;
-import com.ecristobale.apifirst.model.OrderLineCreate;
+import com.ecristobale.apifirst.model.OrderCreateDto;
+import com.ecristobale.apifirst.model.OrderLineCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,10 +38,10 @@ public class OrderControllerTest extends BaseTest {
     @DisplayName("Test Create Order")
     @Test
     void testCreateOrder() throws Exception {
-        OrderCreate orderCreate = OrderCreate.builder()
+        OrderCreateDto orderCreate = OrderCreateDto.builder()
                 .customerId(testCustomer.getId())
                 .selectPaymentMethodId(testCustomer.getPaymentMethods().get(0).getId())
-                .orderLines(Arrays.asList(OrderLineCreate.builder()
+                .orderLines(Arrays.asList(OrderLineCreateDto.builder()
                         .productId(testProduct.getId())
                         .orderQuantity(2)
                         .build()))

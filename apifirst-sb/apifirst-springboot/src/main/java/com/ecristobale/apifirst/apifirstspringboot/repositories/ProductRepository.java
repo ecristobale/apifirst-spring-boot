@@ -1,6 +1,6 @@
 package com.ecristobale.apifirst.apifirstspringboot.repositories;
 
-import com.ecristobale.apifirst.model.Product;
+import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

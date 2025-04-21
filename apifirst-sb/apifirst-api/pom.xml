@@ -73,6 +73,7 @@
                             <generateAliasAsModel>false</generateAliasAsModel>
                             <generateApis>false</generateApis>
                             <modelPackage>com.ecristobale.apifirst.model</modelPackage>
+                            <modelNameSuffix>Dto</modelNameSuffix>
                             <configOptions>
                                 <sourceFolder>src/gen/java/main</sourceFolder>
                                 <useJakartaEe>true</useJakartaEe>

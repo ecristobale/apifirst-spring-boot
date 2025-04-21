@@ -1,9 +1,9 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.Customer;
-import com.ecristobale.apifirst.model.Order;
+import com.ecristobale.apifirst.model.CustomerDto;
+import com.ecristobale.apifirst.model.OrderDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.OrderService;
-import com.ecristobale.apifirst.model.OrderCreate;
+import com.ecristobale.apifirst.model.OrderCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +25,18 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<Order>> listOrders(){
+    public ResponseEntity<List<OrderDto>> listOrders(){
         return ResponseEntity.ok(orderService.listOrders());
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getProductById(@PathVariable("orderId") UUID orderId) {
+    public ResponseEntity<OrderDto> getProductById(@PathVariable("orderId") UUID orderId) {
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveNewCustomer(@RequestBody OrderCreate orderCreate) {
-        Order savedOrder = orderService.saveNewCustomer(orderCreate);
+    public ResponseEntity<Void> saveNewCustomer(@RequestBody OrderCreateDto orderCreate) {
+        OrderDto savedOrder = orderService.saveNewCustomer(orderCreate);
 
         UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{orderId}" )
                 .buildAndExpand(savedOrder.getId());
