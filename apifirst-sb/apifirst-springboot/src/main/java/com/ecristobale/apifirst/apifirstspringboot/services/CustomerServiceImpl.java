@@ -22,21 +22,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDto> listCustomers() {
         return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
-                .map(customerMapper::customerToDto)
+                .map(customerMapper::customerToCustomerDto)
                 .toList();
     }
 
     @Override
     public CustomerDto getCustomerById(UUID customerId) {
-        return customerMapper.customerToDto(
+        return customerMapper.customerToCustomerDto(
                 customerRepository.findById(customerId).orElseThrow());
     }
 
     @Transactional
     @Override
     public CustomerDto saveNewCustomer(CustomerDto customer) {
-        Customer savedCustomer = customerRepository.save(customerMapper.dtoToCustomer(customer));
+        Customer savedCustomer = customerRepository.save(customerMapper.customerDtoToCustomer(customer));
         customerRepository.flush();
-        return customerMapper.customerToDto(savedCustomer);
+        return customerMapper.customerToCustomerDto(savedCustomer);
     }
 }

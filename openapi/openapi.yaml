@@ -40,6 +40,8 @@ paths:
     $ref: 'paths/v1/orders.yaml'
   /v1/orders/{orderId}:
     $ref: 'paths/v1/orders_{orderId}.yaml'
+  /v1/categories:
+    $ref: 'paths/v1/categories.yaml'
 security:
   - basic_auth: []
 components:

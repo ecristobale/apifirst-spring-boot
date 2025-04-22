@@ -32,6 +32,8 @@ paths:
 #    $ref: paths/v1/orders.yaml
 #  /v1/orders/{orderId}: # no genera nada pero no hace que falle
 #    $ref: paths/v1/orders_{orderId}.yaml
+#  /v1/categories:
+#    $ref: paths/v1/categories.yaml
   /greetings:
     get:
       tags:
@@ -257,6 +259,34 @@ components:
           $ref: '#/components/schemas/iso_timestamp'
         dateUpdated:
           $ref: '#/components/schemas/iso_timestamp'
+    product_create:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description of the product
+          minLength: 3
+          maxLength: 255
+        dimensions:
+          $ref: '#/components/schemas/dimensions'
+        categories:
+          type: array
+          description: The categories of the product
+          items:
+            type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/image'
+        price:
+          type: string
+          pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
+        cost:
+          type: string
+          pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
+      required:
+        - description
+        - price
     dimensions:
       type: object
       properties:
@@ -283,6 +313,10 @@ components:
         - length
         - width
         - height
+    category_list:
+      type: array
+      items:
+        $ref: '#/components/schemas/category'
     category:
       type: object
       properties:
@@ -304,6 +338,12 @@ components:
           minLength: 3
           maxLength: 255
           example: Electronics and gadgets
+        category_code:
+          type: string
+          description: Category code of the product
+          minLength: 3
+          maxLength: 25
+          example: ELECTRONICS
         dateCreated:
           $ref: '#/components/schemas/iso_timestamp'
         dateUpdated:
