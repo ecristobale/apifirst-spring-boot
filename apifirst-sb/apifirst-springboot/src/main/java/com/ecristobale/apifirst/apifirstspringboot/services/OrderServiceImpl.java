@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
                             .build());
                 });
 
-        Order savedOrder = orderRepository.save(builder.orderLines(orderLines).build());
+        Order savedOrder = orderRepository.saveAndFlush(builder.orderLines(orderLines).build());
 
         return orderMapper.orderToOrderDto(savedOrder);
     }
