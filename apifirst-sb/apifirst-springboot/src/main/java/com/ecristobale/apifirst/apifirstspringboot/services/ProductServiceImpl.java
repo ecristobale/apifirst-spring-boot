@@ -20,15 +20,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> listProducts() {
-//        return StreamSupport.stream(productRepository.findAll().spliterator(), false)
-//                .toList();
-        return null;
+        return StreamSupport.stream(productRepository.findAll().spliterator(), false)
+                .map(productMapper::productToProductDto)
+                .toList();
     }
 
     @Override
     public ProductDto getProductById(UUID productId) {
-//        return productRepository.findById(productId).orElseThrow();
-        return null;
+        return productMapper.productToProductDto(productRepository.findById(productId).orElseThrow());
     }
 
     @Override
