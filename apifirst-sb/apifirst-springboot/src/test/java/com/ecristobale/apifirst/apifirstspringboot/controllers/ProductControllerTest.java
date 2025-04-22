@@ -1,9 +1,6 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.CategoryDto;
-import com.ecristobale.apifirst.model.DimensionsDto;
-import com.ecristobale.apifirst.model.ImageDto;
-import com.ecristobale.apifirst.model.ProductDto;
+import com.ecristobale.apifirst.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,14 +20,11 @@ class ProductControllerTest extends BaseTest {
     @DisplayName("Test Create Product")
     @Test
     void testCreateProduct() throws Exception {
-        ProductDto newProduct = ProductDto.builder()
+        ProductCreateDto newProduct = ProductCreateDto.builder()
                 .description("New Product")
                 .cost("5.00")
                 .price("8.95")
-                .categories(Arrays.asList(CategoryDto.builder()
-                        .category("New Category")
-                        .description("New Category Description")
-                        .build()))
+                .categories(Arrays.asList("ELECTRONICS"))
                 .images(Arrays.asList(ImageDto.builder()
                         .url("http://example.com/image.jpg")
                         .altText("Image Alt Text")
@@ -47,7 +41,6 @@ class ProductControllerTest extends BaseTest {
                         .content(objectMapper.writeValueAsString(newProduct))) //convert to JSON
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"));
-
     }
 
     @DisplayName("Test Get List Products")

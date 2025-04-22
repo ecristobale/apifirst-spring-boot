@@ -1,5 +1,6 @@
 package com.ecristobale.apifirst.apifirstspringboot.services;
 
+import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface ProductService {
 
     ProductDto getProductById(UUID productId);
 
-    ProductDto saveNewProduct(ProductDto product);
+    ProductDto saveNewProduct(ProductCreateDto product);
 }

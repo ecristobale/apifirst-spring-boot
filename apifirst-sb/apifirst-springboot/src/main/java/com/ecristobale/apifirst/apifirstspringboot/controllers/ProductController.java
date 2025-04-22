@@ -1,5 +1,6 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
+import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveNewProduct(@RequestBody ProductDto product) {
+    public ResponseEntity<Void> saveNewProduct(@RequestBody ProductCreateDto product) {
         ProductDto savedProduct = productService.saveNewProduct(product);
 
         UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{productId}" )
