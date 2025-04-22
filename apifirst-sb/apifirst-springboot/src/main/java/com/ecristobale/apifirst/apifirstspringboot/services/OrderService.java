@@ -11,5 +11,5 @@ public interface OrderService {
 
     OrderDto getOrderById(UUID orderId);
 
-    OrderDto saveNewCustomer(OrderCreateDto orderCreate);
+    OrderDto saveNewOrder(OrderCreateDto orderCreate);
 }

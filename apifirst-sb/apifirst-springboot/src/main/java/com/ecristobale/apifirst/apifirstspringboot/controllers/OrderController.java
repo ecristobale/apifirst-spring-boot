@@ -36,7 +36,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Void> saveNewCustomer(@RequestBody OrderCreateDto orderCreate) {
-        OrderDto savedOrder = orderService.saveNewCustomer(orderCreate);
+        OrderDto savedOrder = orderService.saveNewOrder(orderCreate);
 
         UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{orderId}" )
                 .buildAndExpand(savedOrder.getId());
