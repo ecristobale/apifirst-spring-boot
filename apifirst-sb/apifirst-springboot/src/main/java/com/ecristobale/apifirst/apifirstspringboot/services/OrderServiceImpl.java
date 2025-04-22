@@ -1,5 +1,7 @@
 package com.ecristobale.apifirst.apifirstspringboot.services;
 
+import com.ecristobale.apifirst.apifirstspringboot.domain.*;
+import com.ecristobale.apifirst.apifirstspringboot.mappers.OrderMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ProductRepository;
@@ -21,54 +23,42 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
 
+    private final OrderMapper orderMapper;
+
     @Override
     public List<OrderDto> listOrders() {
-//        return StreamSupport.stream(orderRepository.findAll().spliterator(), false)
-//                .toList();
-        return null;
+        return StreamSupport.stream(orderRepository.findAll().spliterator(), false)
+                .map(orderMapper::orderToOrderDto)
+                .toList();
     }
 
     @Override
     public OrderDto getOrderById(UUID orderId) {
-//        return orderRepository.findById(orderId).orElseThrow();
-        return null;
+        return orderMapper.orderToOrderDto(orderRepository.findById(orderId).orElseThrow());
     }
 
     @Override
     public OrderDto saveNewCustomer(OrderCreateDto orderCreate) {
-//        CustomerDto orderCustomer = customerRepository.findById(orderCreate.getCustomerId()).orElseThrow();
+        Customer orderCustomer = customerRepository.findById(orderCreate.getCustomerId()).orElseThrow();
 
-//        OrderDto.OrderDtoBuilder builder = OrderDto.builder()
-//                .customer(OrderCustomerDto.builder()
-//                        .id(orderCustomer.getId())
-//                        .name(orderCustomer.getName())
-//                        .billToAddress(orderCustomer.getBillToAddress())
-//                        .shipToAddress(orderCustomer.getShipToAddress())
-//                        .phone(orderCustomer.getPhone())
-//                        .selectedPaymentMethod(orderCustomer.getPaymentMethods().stream()
-//                                .filter(paymentMethod -> paymentMethod.getId()
-//                                        .equals(orderCreate.getSelectPaymentMethodId()))
-//                                .findFirst().orElseThrow())
-//                        .build())
-//                .orderStatus(OrderDto.OrderStatusEnum.NEW);
+        Order.OrderBuilder builder = Order.builder()
+                .customer(orderCustomer)
+                .orderStatus(OrderStatusEnum.NEW);
 
-//        List<OrderLineDto> orderLines = new ArrayList<>();
+        List<OrderLine> orderLines = new ArrayList<>();
 
-//        orderCreate.getOrderLines()
-//                .forEach(orderLineCreate -> {
-//                    ProductDto product = productRepository.findById(orderLineCreate.getProductId()).orElseThrow();
-//
-//                    orderLines.add(OrderLineDto.builder()
-//                            .product(OrderProductDto.builder()
-//                                    .id(product.getId())
-//                                    .description(product.getDescription())
-//                                    .price(product.getPrice())
-//                                    .build())
-//                            .orderQuantity(orderLineCreate.getOrderQuantity())
-//                            .build());
-//                });
+        orderCreate.getOrderLines()
+                .forEach(orderLineCreate -> {
+                    Product product = productRepository.findById(orderLineCreate.getProductId()).orElseThrow();
 
-//        return orderRepository.save(builder.orderLines(orderLines).build());
-        return null;
+                    orderLines.add(OrderLine.builder()
+                            .product(product)
+                            .orderQuantity(orderLineCreate.getOrderQuantity())
+                            .build());
+                });
+
+        Order savedOrder = orderRepository.save(builder.orderLines(orderLines).build());
+
+        return orderMapper.orderToOrderDto(savedOrder);
     }
 }

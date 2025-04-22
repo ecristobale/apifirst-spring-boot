@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
@@ -37,6 +38,7 @@ public class OrderControllerTest extends BaseTest {
 
     @DisplayName("Test Create Order")
     @Test
+    @Transactional
     void testCreateOrder() throws Exception {
         OrderCreateDto orderCreate = OrderCreateDto.builder()
                 .customerId(testCustomer.getId())
