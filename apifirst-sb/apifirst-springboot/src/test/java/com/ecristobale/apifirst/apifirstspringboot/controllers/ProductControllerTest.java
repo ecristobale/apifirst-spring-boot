@@ -1,10 +1,12 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
+import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
 import com.ecristobale.apifirst.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
@@ -12,6 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -41,6 +44,23 @@ class ProductControllerTest extends BaseTest {
                         .content(objectMapper.writeValueAsString(newProduct))) //convert to JSON
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"));
+    }
+
+    @Transactional
+    @Test
+    void testUpdateProduct() throws Exception {
+
+        Product product = productRepository.findAll().iterator().next();
+
+        ProductUpdateDto productUpdateDto = productMapper.productToProductUpdateDto(product);
+
+        productUpdateDto.setDescription("Updated Description");
+
+        mockMvc.perform(put(ProductController.BASE_PATH + "/{productId}", product.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productUpdateDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.description", equalTo("Updated Description")));
     }
 
     @DisplayName("Test Get List Products")

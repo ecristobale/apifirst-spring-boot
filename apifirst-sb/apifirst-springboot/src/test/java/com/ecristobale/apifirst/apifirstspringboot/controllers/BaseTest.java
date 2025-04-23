@@ -3,6 +3,7 @@ package com.ecristobale.apifirst.apifirstspringboot.controllers;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Order;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
+import com.ecristobale.apifirst.apifirstspringboot.mappers.ProductMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ProductRepository;
@@ -25,6 +26,9 @@ public class BaseTest {
     WebApplicationContext wac;
 
     public MockMvc mockMvc;
+
+    @Autowired
+    ProductMapper productMapper;
 
     @Autowired
     ObjectMapper objectMapper;
