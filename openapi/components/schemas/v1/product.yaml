@@ -2,12 +2,15 @@ type: object
 properties: 
   id: 
     type: string
+    readOnly: true
     format: uuid
     description: The unique identifier of the product
     nullable: true
   description:
     type: string
     description: The description of the product 
+    minLength: 3
+    maxLength: 255
   dimensions:
     $ref: dimensions.yaml
   categories:
@@ -28,3 +31,6 @@ properties:
     $ref: ../common/iso_timestamp.yaml
   dateUpdated:
     $ref: ../common/iso_timestamp.yaml
+required:
+    - description
+    - price
