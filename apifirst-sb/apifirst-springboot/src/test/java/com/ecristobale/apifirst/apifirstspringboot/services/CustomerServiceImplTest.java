@@ -7,6 +7,7 @@ import com.ecristobale.apifirst.model.AddressDto;
 import com.ecristobale.apifirst.model.CustomerDto;
 import com.ecristobale.apifirst.model.NameDto;
 import com.ecristobale.apifirst.model.PaymentMethodDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +28,7 @@ public class CustomerServiceImplTest {
     CustomerRepository customerRepository;
 
     @Transactional
+    @DisplayName("Test Customer Service method: save")
     @Test
     void saveNewCustomer() {
         CustomerDto customerDto = createCustomerDTO();

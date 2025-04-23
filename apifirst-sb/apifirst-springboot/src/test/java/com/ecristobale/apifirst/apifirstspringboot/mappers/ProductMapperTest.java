@@ -5,6 +5,7 @@ import com.ecristobale.apifirst.apifirstspringboot.repositories.CategoryReposito
 import com.ecristobale.apifirst.model.DimensionsDto;
 import com.ecristobale.apifirst.model.ImageDto;
 import com.ecristobale.apifirst.model.ProductCreateDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ public class ProductMapperTest {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @DisplayName("Test product mapper")
     @Test
     void productDtoToProduct() {
 

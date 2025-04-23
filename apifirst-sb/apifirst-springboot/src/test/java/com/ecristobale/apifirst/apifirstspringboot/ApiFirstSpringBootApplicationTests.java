@@ -2,6 +2,7 @@ package com.ecristobale.apifirst.apifirstspringboot;
 
 
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ public class ApiFirstSpringBootApplicationTests {
         // If the application context fails to load, this test will fail.
     }
 
+    @DisplayName("Test Data Loader: test data")
     @Test
     void testDataLoad() {
         assertThat(customerRepository.count()).isGreaterThan(0L);
