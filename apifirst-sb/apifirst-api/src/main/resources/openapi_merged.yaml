@@ -412,6 +412,10 @@ components:
           $ref: '#/components/schemas/iso_timestamp'
         dateUpdated:
           $ref: '#/components/schemas/iso_timestamp'
+      required:
+        - customer
+        - orderLines
+        - orderStatus
     order_customer:
       type: object
       properties:

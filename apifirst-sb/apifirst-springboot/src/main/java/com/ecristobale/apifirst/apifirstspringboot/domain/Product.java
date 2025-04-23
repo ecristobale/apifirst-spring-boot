@@ -28,7 +28,7 @@ public class Product {
     @Column(length = 36, columnDefinition = "char(36)", updatable = false, nullable = false)
     private UUID id;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Image> images;
 
     @Embedded
@@ -53,4 +53,16 @@ public class Product {
 
     @UpdateTimestamp
     private OffsetDateTime dateUpdated;
+
+    public static class ProductBuilder {
+        public Product build() {
+            Product product = new Product(this.id, this.images, this.dimensions, this.categories, this.description, this.price, this.cost, this.dateCreated, this.dateUpdated);
+
+            if(this.images != null) {
+                this.images.forEach(i -> i.setProduct(product));
+            }
+
+            return product;
+        }
+    }
 }
