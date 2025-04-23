@@ -16,7 +16,7 @@ public class ProductRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
-    //@Transactional
+    @Transactional
     @DisplayName("Test Product Repository: Persistence of Image")
     @Test
     void testImagePersistence() {
