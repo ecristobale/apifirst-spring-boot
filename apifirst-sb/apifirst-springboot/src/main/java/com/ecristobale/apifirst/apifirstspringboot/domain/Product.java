@@ -1,6 +1,9 @@
 package com.ecristobale.apifirst.apifirstspringboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -34,8 +37,15 @@ public class Product {
     @ManyToMany
     private List<Category> categories;
 
+    @NotNull
+    @Size(min=3,max=255)
     private String description;
+
+    @NotNull
+    @Pattern(regexp="^-?(?:0|[1-9]\\d{0,2}(?:,?\\d{3})*)(?:\\.\\d+)?$")
     private String price;
+
+    @Pattern(regexp="^-?(?:0|[1-9]\\d{0,2}(?:,?\\d{3})*)(?:\\.\\d+)?$")
     private String cost;
 
     @CreationTimestamp
