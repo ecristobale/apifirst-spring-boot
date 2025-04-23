@@ -293,6 +293,34 @@ components:
       required:
         - description
         - price
+    product_update:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description of the product
+          minLength: 3
+          maxLength: 255
+        dimensions:
+          $ref: '#/components/schemas/dimensions'
+        categories:
+          type: array
+          description: The categories of the product
+          items:
+            type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/product_image_update'
+        price:
+          type: string
+          pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
+        cost:
+          type: string
+          pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
+      required:
+        - description
+        - price
     dimensions:
       type: object
       properties:
@@ -385,6 +413,28 @@ components:
           $ref: '#/components/schemas/iso_timestamp'
       required:
         - url
+    product_image_update:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the image
+        url:
+          type: string
+          format: url
+          description: The url of the image
+          minLength: 5
+          maxLength: 500
+          example: https://raw.githubusercontent.com/ecristobale/apifirst-spring-boot/refs/heads/main/DDD%20design/Entidad%20Customer%20Programacion%20con%20Value%20Objects%20y%20objetos.png
+        altText:
+          type: string
+          nullable: true
+          minLength: 3
+          maxLength: 255
+      required:
+        - url
+        - id
     order:
       type: object
       properties:

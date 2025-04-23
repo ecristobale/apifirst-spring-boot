@@ -24,3 +24,35 @@ get:
       description: Bad Request
     '404':
       description: Not Found
+put:
+  tags:
+    - Product
+  summary: Update a product by ID
+  description: |
+    Update a product by ID.
+  operationId: updateProductById
+  parameters:
+    - name: productId
+      in: path
+      required: true
+      description: The ID of the product to retrieve.
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/v1/product_update.yaml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/product.yaml
+    '400':
+      description: Bad Request
+    '404':
+      description: Not Found
