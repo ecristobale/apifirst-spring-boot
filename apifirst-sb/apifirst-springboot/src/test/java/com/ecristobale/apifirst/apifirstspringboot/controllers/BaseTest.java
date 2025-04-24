@@ -3,6 +3,7 @@ package com.ecristobale.apifirst.apifirstspringboot.controllers;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Order;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
+import com.ecristobale.apifirst.apifirstspringboot.mappers.CustomerMapper;
 import com.ecristobale.apifirst.apifirstspringboot.mappers.ProductMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
@@ -29,6 +30,9 @@ public class BaseTest {
 
     @Autowired
     ProductMapper productMapper;
+
+    @Autowired
+    CustomerMapper customerMapper;
 
     @Autowired
     ObjectMapper objectMapper;

@@ -24,3 +24,35 @@ get:
       description: Bad Request
     '404':
       description: Not Found
+put:
+  tags:
+    - Customer
+  summary: Update a customer by ID
+  description: |
+    Update a customer by ID.
+  operationId: updateCustomerById
+  parameters:
+    - name: customerId
+      in: path
+      required: true
+      description: The ID of the customer to retrieve.
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/v1/customer.yaml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/customer.yaml
+    '400':
+      description: Bad Request
+    '404':
+      description: Not Found

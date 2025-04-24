@@ -40,4 +40,11 @@ public class CustomerController {
 
         return ResponseEntity.created(URI.create(uriComponents.getPath())).build();
     }
+
+    @PutMapping("{customerId}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("customerId") UUID customerId,
+                                                      @RequestBody CustomerDto customer) {
+        CustomerDto savedCustomer = customerService.updateCustomer(customerId, customer);
+        return ResponseEntity.ok(savedCustomer);
+    }
 }

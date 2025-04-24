@@ -47,6 +47,7 @@ class ProductControllerTest extends BaseTest {
     }
 
     @Transactional
+    @DisplayName("Test Update Product")
     @Test
     void testUpdateProduct() throws Exception {
 
