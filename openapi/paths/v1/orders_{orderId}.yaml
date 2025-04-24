@@ -24,3 +24,33 @@ get:
       description: Bad Request
     '404':
       description: Not Found
+put:
+  tags:
+    - Order
+  summary: Update a order by ID
+  description: |
+    Update a order by ID.
+  operationId: updateOrderById
+  parameters:
+    - name: orderId
+      in: path
+      required: true
+      description: The ID of the order to retrieve.
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/v1/order_update.yaml
+  responses:
+    '200':
+      description: Order Updated
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/order.yaml
+    '400':
+      description: Bad Request

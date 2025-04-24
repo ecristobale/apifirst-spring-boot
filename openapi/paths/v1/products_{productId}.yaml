@@ -47,12 +47,12 @@ put:
           $ref: ../../components/schemas/v1/product_update.yaml
   responses:
     '200':
-      description: Success
+      description: Product Updated
       content:
         application/json:
           schema:
             $ref: ../../components/schemas/v1/product.yaml
     '400':
-      description: Bad Request
+      description: Bad Request 
     '404':
       description: Not Found

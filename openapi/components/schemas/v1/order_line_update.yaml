@@ -1,0 +1,19 @@
+type: object
+properties: 
+  id: 
+    type: string
+    format: uuid
+    description: The unique identifier of the order line
+  productId: 
+    type: string
+    format: uuid
+  orderQuantity:
+    type: integer # number for BigDecimal
+    format: int32
+    minimum: 1
+    maximum: 10000
+    example: 10
+required:
+  - id
+  - productId
+  - orderQuantity
