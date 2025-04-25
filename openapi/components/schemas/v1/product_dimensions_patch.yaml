@@ -1,0 +1,24 @@
+type: object
+properties:
+  length:
+    type: integer # number for BigDecimal
+    description: The length of the product
+    minimum: 1
+    maximum: 999
+    example: 10
+    nullable: true
+  width:
+    type: integer # number for BigDecimal
+    description: The width of the product
+    minimum: 1
+    maximum: 999
+    example: 10
+    nullable: true
+  height:
+    type: integer # number for BigDecimal
+    description: The height of the product
+    minimum: 1
+    maximum: 999
+    example: 10
+    nullable: true
+description: The dimentions of the product

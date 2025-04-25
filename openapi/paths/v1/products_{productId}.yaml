@@ -56,3 +56,35 @@ put:
       description: Bad Request 
     '404':
       description: Not Found
+patch:
+  tags:
+    - Product
+  summary: Patch a product by ID
+  description: |
+    Patch a product by ID.
+  operationId: patchProductById
+  parameters:
+    - name: productId
+      in: path
+      required: true
+      description: The ID of the product to retrieve.
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/v1/product_patch.yaml
+  responses:
+    '200':
+      description: Product Patched
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/product.yaml
+    '400':
+      description: Bad Request 
+    '404':
+      description: Not Found

@@ -321,6 +321,36 @@ components:
       required:
         - description
         - price
+    product_patch:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description of the product
+          minLength: 3
+          maxLength: 255
+          nullable: true
+        dimensions:
+          $ref: '#/components/schemas/product_dimensions_patch'
+        categories:
+          type: array
+          description: The categories of the product
+          items:
+            type: string
+          nullable: true
+        images:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/product_image_patch'
+        price:
+          type: string
+          pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
+          nullable: true
+        cost:
+          type: string
+          pattern: ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
+          nullable: true
     dimensions:
       type: object
       properties:
@@ -347,6 +377,31 @@ components:
         - length
         - width
         - height
+    product_dimensions_patch:
+      type: object
+      properties:
+        length:
+          type: integer # number for BigDecimal
+          description: The length of the product
+          minimum: 1
+          maximum: 999
+          example: 10
+          nullable: true
+        width:
+          type: integer # number for BigDecimal
+          description: The width of the product
+          minimum: 1
+          maximum: 999
+          example: 10
+          nullable: true
+        height:
+          type: integer # number for BigDecimal
+          description: The height of the product
+          minimum: 1
+          maximum: 999
+          example: 10
+          nullable: true
+      description: The dimentions of the product
     category_list:
       type: array
       items:
@@ -434,6 +489,28 @@ components:
           maxLength: 255
       required:
         - url
+        - id
+    product_image_patch:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the image
+        url:
+          type: string
+          format: url
+          description: The url of the image
+          minLength: 5
+          maxLength: 500
+          nullable: true
+          example: https://raw.githubusercontent.com/ecristobale/apifirst-spring-boot/refs/heads/main/DDD%20design/Entidad%20Customer%20Programacion%20con%20Value%20Objects%20y%20objetos.png
+        altText:
+          type: string
+          nullable: true
+          minLength: 3
+          maxLength: 255
+      required:
         - id
     order:
       type: object
