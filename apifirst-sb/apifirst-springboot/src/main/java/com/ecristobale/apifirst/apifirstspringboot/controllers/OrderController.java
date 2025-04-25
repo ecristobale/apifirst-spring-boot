@@ -1,9 +1,9 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
-import com.ecristobale.apifirst.model.CustomerDto;
 import com.ecristobale.apifirst.model.OrderDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.OrderService;
 import com.ecristobale.apifirst.model.OrderCreateDto;
+import com.ecristobale.apifirst.model.OrderUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +42,12 @@ public class OrderController {
                 .buildAndExpand(savedOrder.getId());
 
         return ResponseEntity.created(URI.create(uriComponents.getPath())).build();
+    }
+
+    @PutMapping("{orderId}")
+    public ResponseEntity<OrderDto> updateCustomer(@PathVariable("orderId") UUID orderId,
+                                                   @RequestBody OrderUpdateDto orderUpdateDto) {
+        OrderDto updatedOrder = orderService.updateOrder(orderId, orderUpdateDto);
+        return ResponseEntity.ok(updatedOrder);
     }
 }

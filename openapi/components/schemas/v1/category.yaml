@@ -18,7 +18,7 @@ properties:
     minLength: 3
     maxLength: 255
     example: Electronics and gadgets
-  category_code: 
+  categoryCode: 
     type: string
     description: Category code of the product
     minLength: 3

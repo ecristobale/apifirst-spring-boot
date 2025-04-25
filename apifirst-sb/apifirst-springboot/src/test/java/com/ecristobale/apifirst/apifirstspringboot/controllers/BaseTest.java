@@ -4,6 +4,7 @@ import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Order;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
 import com.ecristobale.apifirst.apifirstspringboot.mappers.CustomerMapper;
+import com.ecristobale.apifirst.apifirstspringboot.mappers.OrderMapper;
 import com.ecristobale.apifirst.apifirstspringboot.mappers.ProductMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
@@ -18,21 +19,23 @@ import org.springframework.web.context.WebApplicationContext;
 public class BaseTest {
 
     @Autowired
-    CustomerRepository customerRepository;
-    @Autowired
-    ProductRepository productRepository;
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
     WebApplicationContext wac;
 
     public MockMvc mockMvc;
 
     @Autowired
-    ProductMapper productMapper;
+    CustomerRepository customerRepository;
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     @Autowired
+    ProductMapper productMapper;
+    @Autowired
     CustomerMapper customerMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Autowired
     ObjectMapper objectMapper;

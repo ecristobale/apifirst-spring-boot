@@ -1,7 +1,9 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
+import com.ecristobale.apifirst.apifirstspringboot.domain.Order;
 import com.ecristobale.apifirst.model.OrderCreateDto;
 import com.ecristobale.apifirst.model.OrderLineCreateDto;
+import com.ecristobale.apifirst.model.OrderUpdateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -56,5 +60,26 @@ public class OrderControllerTest extends BaseTest {
                         .content(objectMapper.writeValueAsString(orderCreate)))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"));
+    }
+
+    @DisplayName("Test Update Order")
+    @Test
+    @Transactional
+    void testUpdateOrder() throws Exception {
+
+        Order order = orderRepository.findAll().get(0);
+
+        order.getOrderLines().get(0).setOrderQuantity(222);
+
+        OrderUpdateDto orderUpdate = orderMapper.orderToOrderUpdateDto(order);
+
+        mockMvc.perform(put(OrderController.BASE_PATH + "/{orderId}", testOrder.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderUpdate))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(testOrder.getId().toString())))
+                .andExpect(jsonPath("$.orderLines.length()", greaterThan(0)))
+                .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(222)));
     }
 }

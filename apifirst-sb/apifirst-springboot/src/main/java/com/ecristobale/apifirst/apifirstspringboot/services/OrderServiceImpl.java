@@ -6,6 +6,7 @@ import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
 import com.ecristobale.apifirst.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +38,18 @@ public class OrderServiceImpl implements OrderService {
 
 
         Order savedOrder = orderRepository.saveAndFlush(orderMapper.orderCreateDtoToOrder(orderCreate));
+
+        return orderMapper.orderToOrderDto(savedOrder);
+    }
+
+    @Transactional
+    @Override
+    public OrderDto updateOrder(UUID orderId, OrderUpdateDto orderUpdateDto) {
+        Order existingOrder = orderRepository.findById(orderId).orElseThrow();
+
+        orderMapper.updateOrder(orderUpdateDto, existingOrder);
+
+        Order savedOrder = orderRepository.saveAndFlush(existingOrder);
 
         return orderMapper.orderToOrderDto(savedOrder);
     }

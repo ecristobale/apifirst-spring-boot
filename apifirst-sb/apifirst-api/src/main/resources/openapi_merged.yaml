@@ -372,7 +372,7 @@ components:
           minLength: 3
           maxLength: 255
           example: Electronics and gadgets
-        category_code:
+        categoryCode:
           type: string
           description: Category code of the product
           minLength: 3
@@ -499,13 +499,13 @@ components:
           readOnly: true
         product:
           $ref: '#/components/schemas/order_product'
-        order_quantity:
+        orderQuantity:
           type: integer # number for BigDecimal
           description: The quantity of the product in the order
           minimum: 1
           maximum: 10000
           example: 10
-        ship_quantity:
+        shipQuantity:
           type: integer # number for BigDecimal
           description: The quantity of the product shipped
           minimum: 1
@@ -518,7 +518,7 @@ components:
           $ref: '#/components/schemas/iso_timestamp'
       required:
         - product
-        - order_quantity
+        - orderQuantity
     order_product:
       type: object
       properties:
