@@ -3,11 +3,9 @@ package com.ecristobale.apifirst.apifirstspringboot.mappers;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
 import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
+import com.ecristobale.apifirst.model.ProductPatchDto;
 import com.ecristobale.apifirst.model.ProductUpdateDto;
-import org.mapstruct.DecoratedWith;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 @Mapper
 @DecoratedWith(ProductMapperDecorator.class)
@@ -39,4 +37,16 @@ public interface ProductMapper {
     @Mapping(target = "dateUpdated", ignore = true)
     @Mapping(target = "categories", ignore = true)
     void updateProduct(ProductUpdateDto product, @MappingTarget Product target);
+
+    @Mapping(target = "categories", ignore = true)
+    ProductPatchDto productToProductPatchDto(Product product);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dateCreated", ignore = true)
+    @Mapping(target = "dateUpdated", ignore = true)
+    @Mapping(target = "categories", ignore = true)
+    @Mapping(target = "images", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    void patchProduct(ProductPatchDto productPatchDto, @MappingTarget Product target);
 }

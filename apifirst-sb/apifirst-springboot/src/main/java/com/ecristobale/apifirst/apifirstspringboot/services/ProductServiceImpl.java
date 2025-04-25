@@ -5,6 +5,7 @@ import com.ecristobale.apifirst.apifirstspringboot.mappers.ProductMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ProductRepository;
 import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
+import com.ecristobale.apifirst.model.ProductPatchDto;
 import com.ecristobale.apifirst.model.ProductUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto updateProduct(UUID productId, ProductUpdateDto product) {
         Product existingProduct = productRepository.findById(productId).orElseThrow();
         productMapper.updateProduct(product, existingProduct);
+
+        return productMapper.productToProductDto(productRepository.save(existingProduct));
+    }
+
+    @Override
+    public ProductDto patchProduct(UUID productId, ProductPatchDto product) {
+        Product existingProduct = productRepository.findById(productId).orElseThrow();
+        productMapper.patchProduct(product, existingProduct);
 
         return productMapper.productToProductDto(productRepository.save(existingProduct));
     }

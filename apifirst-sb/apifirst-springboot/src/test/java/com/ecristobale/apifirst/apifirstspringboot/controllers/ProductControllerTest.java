@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -80,5 +81,22 @@ class ProductControllerTest extends BaseTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(testProduct.getId().toString())));
+    }
+
+    @Transactional
+    @Test
+    void testPatchProduct() throws Exception {
+
+        Product product = productRepository.findAll().iterator().next();
+
+        ProductPatchDto productPatchDto = productMapper.productToProductPatchDto(product);
+
+        productPatchDto.setDescription("PATCH Updated Description");
+
+        mockMvc.perform(patch(ProductController.BASE_PATH + "/{productId}", product.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productPatchDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.description", equalTo("PATCH Updated Description")));
     }
 }

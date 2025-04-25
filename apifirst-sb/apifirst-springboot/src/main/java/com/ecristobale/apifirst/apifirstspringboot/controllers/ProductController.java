@@ -3,6 +3,7 @@ package com.ecristobale.apifirst.apifirstspringboot.controllers;
 import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.ProductService;
+import com.ecristobale.apifirst.model.ProductPatchDto;
 import com.ecristobale.apifirst.model.ProductUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,13 @@ public class ProductController {
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("productId") UUID productId,
                                                     @RequestBody ProductUpdateDto product){
         ProductDto savedProduct = productService.updateProduct(productId, product);
+        return ResponseEntity.ok(savedProduct);
+    }
+
+    @PatchMapping("/{productId}")
+    public ResponseEntity<ProductDto> patchProduct(@PathVariable("productId") UUID productId,
+                                                   @RequestBody ProductPatchDto product){
+        ProductDto savedProduct = productService.patchProduct(productId, product);
         return ResponseEntity.ok(savedProduct);
     }
 }

@@ -7,6 +7,7 @@ import com.ecristobale.apifirst.apifirstspringboot.repositories.CategoryReposito
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ImageRepository;
 import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
+import com.ecristobale.apifirst.model.ProductPatchDto;
 import com.ecristobale.apifirst.model.ProductUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -144,5 +145,44 @@ public abstract class ProductMapperDecorator implements ProductMapper {
         });
 
         return categories;
+    }
+
+    @Override
+    public ProductPatchDto productToProductPatchDto(Product product) {
+        if (product != null) {
+            if (product.getCategories() != null) {
+                List<String> categoryCodes = new ArrayList<>();
+
+                product.getCategories().forEach(category -> {
+                    categoryCodes.add(category.getCategoryCode());
+                });
+
+                ProductPatchDto productPatchDto = productMapperDelegate.productToProductPatchDto(product);
+                productPatchDto.setCategories(categoryCodes);
+
+                return productPatchDto;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public void patchProduct(ProductPatchDto productPatchDto, Product target) {
+        productMapperDelegate.patchProduct(productPatchDto, target);
+
+        if (productPatchDto.getImages() != null) {
+            productPatchDto.getImages().forEach(imageDto -> {
+                target.getImages().stream().filter(image -> image.getId().equals(imageDto.getId()))
+                        .findFirst().ifPresent(image -> {
+                            imageMapper.patchImage(imageDto, image);
+                        });
+            });
+        }
+
+        if (productPatchDto.getCategories() != null) {
+            List<Category> categories = categoryCodesToCategories(productPatchDto.getCategories());
+            target.setCategories(categories);
+        }
     }
 }
