@@ -27,15 +27,15 @@ get:
 put:
   tags:
     - Order
-  summary: Update a order by ID
+  summary: Update an order by ID
   description: |
-    Update a order by ID.
+    Update an order by ID.
   operationId: updateOrderById
   parameters:
     - name: orderId
       in: path
       required: true
-      description: The ID of the order to retrieve.
+      description: The ID of the order to update.
       schema:
         type: string
         format: uuid
@@ -45,6 +45,34 @@ put:
       application/json:
         schema:
           $ref: ../../components/schemas/v1/order_update.yaml
+  responses:
+    '200':
+      description: Order Updated
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/v1/order.yaml
+    '400':
+      description: Bad Request
+patch: 
+  tags: 
+    -  Order
+  summary: Patch an order by ID.
+  description: Patch an order by ID.
+  operationId: patchOrderById
+  parameters: 
+    - name: orderId
+      in: path
+      description: The ID of the order to update.
+      required: true
+      schema: 
+        type: string
+        format: uuid
+  requestBody: 
+    content: 
+      application/json: 
+        schema: 
+          $ref: ../../components/schemas/v1/order_patch.yaml
   responses:
     '200':
       description: Order Updated

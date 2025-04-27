@@ -1,9 +1,7 @@
 package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
 import com.ecristobale.apifirst.apifirstspringboot.domain.Order;
-import com.ecristobale.apifirst.model.OrderCreateDto;
-import com.ecristobale.apifirst.model.OrderLineCreateDto;
-import com.ecristobale.apifirst.model.OrderUpdateDto;
+import com.ecristobale.apifirst.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,12 +9,14 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -81,5 +81,28 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.id", equalTo(testOrder.getId().toString())))
                 .andExpect(jsonPath("$.orderLines.length()", greaterThan(0)))
                 .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(222)));
+    }
+
+    @DisplayName("Test Patch Order")
+    @Test
+    @Transactional
+    void testPatchOrder() throws Exception {
+
+        Order order = orderRepository.findAll().get(0);
+
+        OrderPatchDto orderPatch = OrderPatchDto.builder()
+                .orderLines(Collections.singletonList(OrderLinePatchDto.builder()
+                        .id(order.getOrderLines().get(0).getId())
+                        .orderQuantity(333)
+                        .build()))
+                .build();
+
+        mockMvc.perform(patch(OrderController.BASE_PATH + "/{orderId}", testOrder.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderPatch))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(testOrder.getId().toString())))
+                .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(333)));
     }
 }

@@ -53,4 +53,11 @@ public class OrderServiceImpl implements OrderService {
 
         return orderMapper.orderToOrderDto(savedOrder);
     }
+
+    @Override
+    public OrderDto patchOrder(UUID orderId, OrderPatchDto orderPatchDto) {
+        Order existingOrder = orderRepository.findById(orderId).orElseThrow();
+        orderMapper.patchOrder(orderPatchDto, existingOrder);
+        return orderMapper.orderToOrderDto(orderRepository.saveAndFlush(existingOrder));
+    }
 }

@@ -3,6 +3,7 @@ package com.ecristobale.apifirst.apifirstspringboot.controllers;
 import com.ecristobale.apifirst.model.OrderDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.OrderService;
 import com.ecristobale.apifirst.model.OrderCreateDto;
+import com.ecristobale.apifirst.model.OrderPatchDto;
 import com.ecristobale.apifirst.model.OrderUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,12 @@ public class OrderController {
                                                    @RequestBody OrderUpdateDto orderUpdateDto) {
         OrderDto updatedOrder = orderService.updateOrder(orderId, orderUpdateDto);
         return ResponseEntity.ok(updatedOrder);
+    }
+
+    @PatchMapping("/{orderId}")
+    public ResponseEntity<OrderDto> patchOrder(@PathVariable("orderId") UUID orderId,
+                                               @RequestBody OrderPatchDto orderPatchDto){
+        OrderDto patchedOrder = orderService.patchOrder(orderId, orderPatchDto);
+        return ResponseEntity.ok(patchedOrder);
     }
 }
