@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -43,26 +44,7 @@ public class CustomerControllerTest extends BaseTest {
     @DisplayName("Test Create Customer")
     @Test
     void testCreateCustomer() throws Exception {
-        CustomerDto newCustomer = CustomerDto.builder()
-                .name(NameDto.builder()
-                        .firstName("John")
-                        .lastName("Doe")
-                        .build())
-                .shipToAddress(AddressDto.builder()
-                        .addressLine1("123 Main St")
-                        .city("Denver")
-                        .state("CO")
-                        .zip("80216")
-                        .build())
-                .billToAddress(AddressDto.builder()
-                        .addressLine1("123 Main St")
-                        .city("Denver")
-                        .state("CO")
-                        .zip("80216")
-                        .build())
-                .phone("555-555-5555")
-                .email("john@example.com")
-                .build();
+        CustomerDto newCustomer = buildTestCustomerDto();
 
         mockMvc.perform(post(CustomerController.BASE_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -117,5 +99,40 @@ public class CustomerControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.name.firstName", equalTo("Patch Updated")))
                 .andExpect(jsonPath("$.name.lastName", equalTo("Patch Updated2")))
                 .andExpect(jsonPath("$.paymentMethods[0].displayName", equalTo("Patch NEW NAME")));
+    }
+
+    @DisplayName("Test Delete Customer")
+    @Test
+    void testDeleteCustomer() throws Exception {
+        CustomerDto customer = buildTestCustomerDto();
+        Customer savedCustomer = customerRepository.save(customerMapper.customerDtoToCustomer(customer));
+
+        mockMvc.perform(delete(CustomerController.BASE_PATH + "/{customerId}", savedCustomer.getId()))
+                .andExpect(status().isNoContent());
+
+        assert customerRepository.findById(savedCustomer.getId()).isEmpty();
+    }
+
+    private CustomerDto buildTestCustomerDto() {
+        return CustomerDto.builder()
+                .name(NameDto.builder()
+                        .lastName("Doe")
+                        .firstName("Ecristobale")
+                        .build())
+                .phone("555-555-5555")
+                .email("ecristobale@ecristobale.com")
+                .shipToAddress(AddressDto.builder()
+                        .addressLine1("123 Main St")
+                        .city("Denver")
+                        .state("CO")
+                        .zip("80216")
+                        .build())
+                .billToAddress(AddressDto.builder()
+                        .addressLine1("123 Main St")
+                        .city("Denver")
+                        .state("CO")
+                        .zip("80216")
+                        .build())
+                .build();
     }
 }

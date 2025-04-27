@@ -55,4 +55,10 @@ public class CustomerController {
         CustomerDto savedCustomer = customerService.patchCustomer(customerId, customer);
         return ResponseEntity.ok(savedCustomer);
     }
+
+    @DeleteMapping("/{customerId}")
+    ResponseEntity<Void> deleteCustomer(@PathVariable("customerId") UUID customerId){
+        customerService.deleteCustomer(customerId);
+        return ResponseEntity.noContent().build();
+    }
 }
