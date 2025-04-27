@@ -13,10 +13,7 @@ import java.util.Collections;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -44,14 +41,7 @@ public class OrderControllerTest extends BaseTest {
     @Test
     @Transactional
     void testCreateOrder() throws Exception {
-        OrderCreateDto orderCreate = OrderCreateDto.builder()
-                .customerId(testCustomer.getId())
-                .selectPaymentMethodId(testCustomer.getPaymentMethods().get(0).getId())
-                .orderLines(Arrays.asList(OrderLineCreateDto.builder()
-                        .productId(testProduct.getId())
-                        .orderQuantity(2)
-                        .build()))
-                .build();
+        OrderCreateDto orderCreate = buildTestOrderDto();
 
         System.out.println(objectMapper.writeValueAsString(orderCreate));
 
@@ -104,5 +94,29 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(testOrder.getId().toString())))
                 .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(333)));
+    }
+
+    @DisplayName("Test Delete Order")
+    @Test
+    @Transactional
+    void testDeleteOrder() throws Exception {
+        OrderCreateDto order = buildTestOrderDto();
+        Order savedOrder = orderRepository.save(orderMapper.orderCreateDtoToOrder(order));
+
+        mockMvc.perform(delete(OrderController.BASE_PATH + "/{orderId}", savedOrder.getId()))
+                .andExpect(status().isNoContent());
+
+        assert orderRepository.findById(savedOrder.getId()).isEmpty();
+    }
+
+    private OrderCreateDto buildTestOrderDto() {
+        return OrderCreateDto.builder()
+                .customerId(testCustomer.getId())
+                .selectPaymentMethodId(testCustomer.getPaymentMethods().get(0).getId())
+                .orderLines(Arrays.asList(OrderLineCreateDto.builder()
+                        .productId(testProduct.getId())
+                        .orderQuantity(2)
+                        .build()))
+                .build();
     }
 }

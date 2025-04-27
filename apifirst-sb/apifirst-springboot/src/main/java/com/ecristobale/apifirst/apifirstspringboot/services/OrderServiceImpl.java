@@ -60,4 +60,9 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.patchOrder(orderPatchDto, existingOrder);
         return orderMapper.orderToOrderDto(orderRepository.saveAndFlush(existingOrder));
     }
+
+    @Override
+    public void deleteOrder(UUID orderId) {
+        orderRepository.deleteById(orderId);
+    }
 }

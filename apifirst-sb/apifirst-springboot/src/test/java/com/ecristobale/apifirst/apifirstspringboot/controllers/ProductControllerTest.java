@@ -12,10 +12,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -24,21 +21,7 @@ class ProductControllerTest extends BaseTest {
     @DisplayName("Test Create Product")
     @Test
     void testCreateProduct() throws Exception {
-        ProductCreateDto newProduct = ProductCreateDto.builder()
-                .description("New Product")
-                .cost("5.00")
-                .price("8.95")
-                .categories(Arrays.asList("ELECTRONICS"))
-                .images(Arrays.asList(ImageDto.builder()
-                        .url("http://example.com/image.jpg")
-                        .altText("Image Alt Text")
-                        .build()))
-                .dimensions(DimensionsDto.builder()
-                        .length(10)
-                        .width(10)
-                        .height(10)
-                        .build())
-                .build();
+        ProductCreateDto newProduct = buildTestProductDto();
 
         mockMvc.perform(post(ProductController.BASE_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -99,5 +82,35 @@ class ProductControllerTest extends BaseTest {
                         .content(objectMapper.writeValueAsString(productPatchDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description", equalTo("PATCH Updated Description")));
+    }
+
+    @DisplayName("Test Delete Product")
+    @Test
+    void testDeleteProduct() throws Exception {
+        ProductCreateDto product = buildTestProductDto();
+        Product savedProduct = productRepository.save(productMapper.productDtoToProduct(product));
+
+        mockMvc.perform(delete(ProductController.BASE_PATH + "/{productId}", savedProduct.getId()))
+                .andExpect(status().isNoContent());
+
+        assert productRepository.findById(savedProduct.getId()).isEmpty();
+    }
+
+    private ProductCreateDto buildTestProductDto() {
+        return ProductCreateDto.builder()
+                .description("New Product")
+                .cost("5.00")
+                .price("8.95")
+                .categories(Arrays.asList("ELECTRONICS"))
+                .images(Arrays.asList(ImageDto.builder()
+                        .url("http://example.com/image.jpg")
+                        .altText("Image Alt Text")
+                        .build()))
+                .dimensions(DimensionsDto.builder()
+                        .length(10)
+                        .width(10)
+                        .height(10)
+                        .build())
+                .build();
     }
 }

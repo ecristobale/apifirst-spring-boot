@@ -36,7 +36,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveNewCustomer(@RequestBody OrderCreateDto orderCreate) {
+    public ResponseEntity<Void> saveNewOrder(@RequestBody OrderCreateDto orderCreate) {
         OrderDto savedOrder = orderService.saveNewOrder(orderCreate);
 
         UriComponents uriComponents = UriComponentsBuilder.fromPath(BASE_PATH + "/{orderId}" )
@@ -46,7 +46,7 @@ public class OrderController {
     }
 
     @PutMapping("{orderId}")
-    public ResponseEntity<OrderDto> updateCustomer(@PathVariable("orderId") UUID orderId,
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable("orderId") UUID orderId,
                                                    @RequestBody OrderUpdateDto orderUpdateDto) {
         OrderDto updatedOrder = orderService.updateOrder(orderId, orderUpdateDto);
         return ResponseEntity.ok(updatedOrder);
@@ -57,5 +57,11 @@ public class OrderController {
                                                @RequestBody OrderPatchDto orderPatchDto){
         OrderDto patchedOrder = orderService.patchOrder(orderId, orderPatchDto);
         return ResponseEntity.ok(patchedOrder);
+    }
+
+    @DeleteMapping("/{orderId}")
+    ResponseEntity<Void> deleteOrder(@PathVariable("orderId") UUID orderId){
+        orderService.deleteOrder(orderId);
+        return ResponseEntity.noContent().build();
     }
 }
