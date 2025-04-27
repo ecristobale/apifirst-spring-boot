@@ -2,6 +2,7 @@ package com.ecristobale.apifirst.apifirstspringboot.controllers;
 
 import com.ecristobale.apifirst.model.CustomerDto;
 import com.ecristobale.apifirst.apifirstspringboot.services.CustomerService;
+import com.ecristobale.apifirst.model.CustomerPatchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,13 @@ public class CustomerController {
     public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("customerId") UUID customerId,
                                                       @RequestBody CustomerDto customer) {
         CustomerDto savedCustomer = customerService.updateCustomer(customerId, customer);
+        return ResponseEntity.ok(savedCustomer);
+    }
+
+    @PatchMapping("/{customerId}")
+    ResponseEntity<CustomerDto> patchCustomer(@PathVariable("customerId") UUID customerId,
+                                              @RequestBody CustomerPatchDto customer){
+        CustomerDto savedCustomer = customerService.patchCustomer(customerId, customer);
         return ResponseEntity.ok(savedCustomer);
     }
 }

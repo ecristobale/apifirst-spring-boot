@@ -110,6 +110,38 @@ components:
         - name
         - shipToAddress
         - billToAddress
+    customer_patch:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier representing a specific customer
+          readOnly: true
+          nullable: true
+        name:
+          $ref: '#/components/schemas/customer_name_patch'
+        shipToAddress:
+          $ref: '#/components/schemas/customer_address_patch'
+        billToAddress:
+          $ref: '#/components/schemas/customer_address_patch'
+        email:
+          type: string
+          maxLength: 255
+          minLength: 3
+          example: ecristobale@ecristobale.es
+          nullable: true
+        phone:
+          type: string
+          maxLength: 15
+          minLength: 7
+          example: 800-555-1212
+          nullable: true
+        paymentMethods:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/customer_payment_method_patch'
     name:
       type: object
       properties:
@@ -141,6 +173,36 @@ components:
       required:
         - firstName
         - lastName
+    customer_name_patch:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: Name Prefix
+          minLength: 0
+          maxLength: 25
+          example: Mr.
+          nullable: true
+        firstName:
+          type: string
+          description: First Name
+          minLength: 2
+          maxLength: 100
+          example: John
+          nullable: true
+        lastName:
+          type: string
+          description: Last Name
+          minLength: 2
+          maxLength: 100
+          example: Ecristobale
+          nullable: true
+        suffix:
+          type: string
+          description: Name Suffix
+          minLength: 0
+          maxLength: 25
+          nullable: true
     address:
       type: object
       properties:
@@ -188,6 +250,50 @@ components:
         - city
         - state
         - zip
+    customer_address_patch:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier representing a specific customer address
+        addressLine1:
+          type: string
+          description: Address Line 1
+          minLength: 3
+          maxLength: 100
+          example: 123 Main Street
+          nullable: true
+        addressLine2:
+          type: string
+          description: Address Line 2
+          minLength: 3
+          maxLength: 100
+          nullable: true
+        city:
+          type: string
+          description: City
+          minLength: 2
+          maxLength: 100
+          example: St Petersburg
+          nullable: true
+        state:
+          type: string
+          description: 2 character state code
+          minLength: 2
+          maxLength: 2
+          example: FL
+          nullable: true
+        zip:
+          type: string
+          description: Zip Code
+          minLength: 5
+          maxLength: 10
+          example: 33701
+          nullable: true
+      required:
+        - id
     payment_method:
       type: object
       properties:
@@ -228,6 +334,37 @@ components:
         - expiryMonth
         - expiryYear
         - cvv
+    customer_payment_method_patch:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier representing a specific payment method.
+        displayName:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: My Chase Card
+          nullable: true
+        cardNumber:
+          type: integer
+          example: 1234567890123456
+          nullable: true
+        expiryMonth:
+          type: integer
+          example: 7
+          nullable: true
+        expiryYear:
+          type: integer
+          example: 26
+          nullable: true
+        cvv:
+          type: integer
+          example: 123
+          nullable: true
+      required:
+        - id
     product:
       type: object
       properties:

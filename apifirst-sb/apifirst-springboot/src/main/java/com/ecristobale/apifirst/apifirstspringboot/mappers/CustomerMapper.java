@@ -2,11 +2,11 @@ package com.ecristobale.apifirst.apifirstspringboot.mappers;
 
 import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
 import com.ecristobale.apifirst.model.CustomerDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import com.ecristobale.apifirst.model.CustomerPatchDto;
+import org.mapstruct.*;
 
 @Mapper
+@DecoratedWith(CustomerMapperDecorator.class)
 public interface CustomerMapper {
 
     CustomerDto customerToCustomerDto(Customer customer);
@@ -19,4 +19,16 @@ public interface CustomerMapper {
     @Mapping(target = "dateCreated", ignore = true)
     @Mapping(target = "dateUpdated", ignore = true)
     Customer updateCustomer(CustomerDto customerDto, @MappingTarget Customer customer);
+
+    CustomerPatchDto customerToCustomerPatchDto(Customer customer);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dateCreated", ignore = true)
+    @Mapping(target = "dateUpdated", ignore = true)
+    @Mapping(target = "shipToAddress.id", ignore = true)
+    @Mapping(target = "billToAddress.id", ignore = true)
+    @Mapping(target = "paymentMethods", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    void patchCustomer(CustomerPatchDto customerPatchDto, @MappingTarget Customer target);
 }

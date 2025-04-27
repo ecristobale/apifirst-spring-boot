@@ -4,6 +4,7 @@ import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
 import com.ecristobale.apifirst.apifirstspringboot.mappers.CustomerMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
 import com.ecristobale.apifirst.model.CustomerDto;
+import com.ecristobale.apifirst.model.CustomerPatchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +47,15 @@ public class CustomerServiceImpl implements CustomerService {
         Customer existingCustomer = customerRepository.findById(customerId).orElseThrow();
         customerMapper.updateCustomer(customer, existingCustomer);
         return customerMapper.customerToCustomerDto(customerRepository.save(existingCustomer));
+    }
+
+    @Transactional
+    @Override
+    public CustomerDto patchCustomer(UUID customerId, CustomerPatchDto customer) {
+        Customer existingCustomer = customerRepository.findById(customerId).orElseThrow();
+
+        customerMapper.patchCustomer(customer, existingCustomer);
+
+        return customerMapper.customerToCustomerDto(customerRepository.saveAndFlush(existingCustomer));
     }
 }

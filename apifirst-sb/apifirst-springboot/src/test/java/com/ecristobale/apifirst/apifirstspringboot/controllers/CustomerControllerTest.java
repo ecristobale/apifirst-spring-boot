@@ -9,11 +9,14 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Collections;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -87,5 +90,32 @@ public class CustomerControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.name.firstName", equalTo("Updated")))
                 .andExpect(jsonPath("$.name.lastName", equalTo("Updated2")))
                 .andExpect(jsonPath("$.paymentMethods[0].displayName", equalTo("NEW NAME")));
+    }
+
+    @Transactional
+    @DisplayName("Test Patch Customer")
+    @Test
+    void testPatchCustomer() throws Exception {
+        Customer customer = customerRepository.findAll().iterator().next();
+
+        CustomerPatchDto customerPatch = CustomerPatchDto.builder()
+                .name(CustomerNamePatchDto.builder()
+                        .firstName("Patch Updated")
+                        .lastName("Patch Updated2")
+                        .build())
+                .paymentMethods(Collections.singletonList(CustomerPaymentMethodPatchDto.builder()
+                        .id(customer.getPaymentMethods().get(0).getId())
+                        .displayName("Patch NEW NAME")
+                        .build()))
+                .build();
+
+        mockMvc.perform(patch(CustomerController.BASE_PATH + "/{customerId}", testCustomer.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerPatch)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name.firstName", equalTo("Patch Updated")))
+                .andExpect(jsonPath("$.name.lastName", equalTo("Patch Updated2")))
+                .andExpect(jsonPath("$.paymentMethods[0].displayName", equalTo("Patch NEW NAME")));
     }
 }
