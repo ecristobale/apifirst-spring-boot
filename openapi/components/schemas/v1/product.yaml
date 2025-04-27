@@ -1,11 +1,7 @@
 type: object
 properties: 
   id: 
-    type: string
-    readOnly: true
-    format: uuid
-    description: The unique identifier of the product
-    nullable: true
+    $ref: ../common/uuid_id.yaml
   description:
     type: string
     description: The description of the product 

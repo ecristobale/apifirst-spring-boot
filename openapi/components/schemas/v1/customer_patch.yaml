@@ -1,11 +1,7 @@
 type: object
 properties:
     id:
-      type: string
-      format: uuid
-      description: Unique identifier representing a specific customer
-      readOnly: true
-      nullable: true
+      $ref: ../common/uuid_id.yaml
     name:  
       $ref: name.yaml
     shipToAddress:

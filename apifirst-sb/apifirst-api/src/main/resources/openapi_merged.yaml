@@ -76,10 +76,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: unique identifier of the customer
-          readOnly: true
+          $ref: '#/components/schemas/uuid_id'
         name:
           $ref: '#/components/schemas/name'
         shipToAddress:
@@ -114,11 +111,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: Unique identifier representing a specific customer
-          readOnly: true
-          nullable: true
+          $ref: '#/components/schemas/uuid_id'
         name:
           $ref: '#/components/schemas/customer_name_patch'
         shipToAddress:
@@ -207,10 +200,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: Unique identifier of the address
-          readOnly: true
+          $ref: '#/components/schemas/uuid_id'
         addressLine1:
           type: string
           description: Address line 1
@@ -298,10 +288,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: Unique identifier of the payment method
-          readOnly: true
+          $ref: '#/components/schemas/uuid_id'
         displayName:
           type: string
           description: Display name of the payment method
@@ -369,11 +356,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          readOnly: true
-          nullable: true
-          format: uuid
-          description: The unique identifier of the product
+          $ref: '#/components/schemas/uuid_id'
         description:
           type: string
           description: The description of the product
@@ -547,11 +530,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
-          format: uuid
-          description: The unique identifier of the category
-          readOnly: true
+          $ref: '#/components/schemas/uuid_id'
         category:
           type: string
           description: The category of the product
@@ -582,11 +561,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: The unique identifier of the image
-          readOnly: true
-          nullable: true
+          $ref: '#/components/schemas/uuid_id'
         url:
           type: string
           format: url
@@ -653,10 +628,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: unique identifier of the order
-          readOnly: true
+          $ref: '#/components/schemas/uuid_id'
         customer:
           $ref: '#/components/schemas/order_customer'
         orderStatus:
@@ -684,9 +656,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: unique identifier of the customer
+          $ref: '#/components/schemas/uuid_id'
         name:
           $ref: '#/components/schemas/name'
         shipToAddress:
@@ -707,10 +677,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          description: The unique identifier of the order line
-          readOnly: true
+          $ref: '#/components/schemas/uuid_id'
         product:
           $ref: '#/components/schemas/order_product'
         orderQuantity:
@@ -855,6 +822,12 @@ components:
           nullable: true
       required:
         - id
+    uuid_id:
+      type: string
+      format: uuid
+      description: System generated unique identifier for the resource.
+      readOnly: true
+      nullable: true
     iso_timestamp:
       type: string
       format: date-time
