@@ -6,13 +6,7 @@ get:
     Get a customer by ID.
   operationId: getCustomerById
   parameters:
-    - name: customerId
-      in: path
-      required: true
-      description: The ID of the customer to retrieve.
-      schema:
-        type: string
-        format: uuid
+    - $ref: ../../components/parameters/customer_id.yaml
   responses:
     '200':
       description: Success
@@ -32,13 +26,7 @@ put:
     Update a customer by ID.
   operationId: updateCustomerById
   parameters:
-    - name: customerId
-      in: path
-      required: true
-      description: The ID of the customer to retrieve.
-      schema:
-        type: string
-        format: uuid
+    - $ref: ../../components/parameters/customer_id.yaml
   requestBody:
     required: true
     content:
@@ -64,13 +52,7 @@ patch:
     Patch a customer by ID.
   operationId: patchCustomerById
   parameters:
-    - name: customerId
-      in: path
-      required: true
-      description: The ID of the customer to retrieve.
-      schema:
-        type: string
-        format: uuid
+    - $ref: ../../components/parameters/customer_id.yaml
   requestBody:
     required: true
     content:

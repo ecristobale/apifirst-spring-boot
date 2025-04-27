@@ -1,0 +1,7 @@
+name: productId
+in: path
+required: true
+description: The ID value of the product. This value is a UUID.
+schema:
+  type: string
+  format: uuid

@@ -84,6 +84,7 @@ class ProductControllerTest extends BaseTest {
     }
 
     @Transactional
+    @DisplayName("Test Patch Product")
     @Test
     void testPatchProduct() throws Exception {
 
