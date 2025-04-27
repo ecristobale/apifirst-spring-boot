@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -94,6 +95,13 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(status().isNoContent());
 
         assert productRepository.findById(savedProduct.getId()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Test Delete Product Not Found")
+    void testDeleteProductNotFound() throws Exception {
+        mockMvc.perform(delete(ProductController.BASE_PATH + "/{productId}", UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
 
     private ProductCreateDto buildTestProductDto() {

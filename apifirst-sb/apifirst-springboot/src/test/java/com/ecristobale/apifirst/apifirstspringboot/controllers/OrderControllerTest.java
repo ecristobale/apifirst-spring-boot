@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.equalTo;
@@ -107,6 +108,13 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(status().isNoContent());
 
         assert orderRepository.findById(savedOrder.getId()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Test Delete Order Not Found")
+    void testDeleteNotFound() throws Exception {
+        mockMvc.perform(delete(OrderController.BASE_PATH + "/{orderId}", UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
 
     private OrderCreateDto buildTestOrderDto() {
