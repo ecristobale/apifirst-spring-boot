@@ -82,6 +82,24 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(222)));
     }
 
+    @DisplayName("Order: Update Not Found")
+    @Test
+    @Transactional
+    void testUpdateOrderNotFound() throws Exception {
+
+        Order order = orderRepository.findAll().get(0);
+
+        order.getOrderLines().get(0).setOrderQuantity(222);
+
+        OrderUpdateDto orderUpdate = orderMapper.orderToOrderUpdateDto(order);
+
+        mockMvc.perform(put(OrderController.BASE_PATH + "/{orderId}", UUID.randomUUID())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderUpdate))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     @DisplayName("Order: Patch")
     @Test
     @Transactional
@@ -103,6 +121,27 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(testOrder.getId().toString())))
                 .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(333)));
+    }
+
+    @DisplayName("Order: Patch Not Found")
+    @Test
+    @Transactional
+    void testPatchOrderNotFound() throws Exception {
+
+        Order order = orderRepository.findAll().get(0);
+
+        OrderPatchDto orderPatch = OrderPatchDto.builder()
+                .orderLines(Collections.singletonList(OrderLinePatchDto.builder()
+                        .id(order.getOrderLines().get(0).getId())
+                        .orderQuantity(333)
+                        .build()))
+                .build();
+
+        mockMvc.perform(patch(OrderController.BASE_PATH + "/{orderId}", UUID.randomUUID())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderPatch))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @DisplayName("Order: Delete")

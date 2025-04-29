@@ -84,6 +84,23 @@ public class CustomerControllerTest extends BaseTest {
     }
 
     @Transactional
+    @DisplayName("Customer: Update Not Found")
+    @Test
+    void testUpdateCustomerNotFound() throws Exception {
+        Customer customer = customerRepository.findAll().iterator().next();
+
+        customer.getName().setFirstName("Updated");
+        customer.getName().setLastName("Updated2");
+        customer.getPaymentMethods().get(0).setDisplayName("NEW NAME");
+
+        mockMvc.perform(put(CustomerController.BASE_PATH + "/{customerId}", UUID.randomUUID())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerMapper.customerToCustomerDto(customer))))
+                .andExpect(status().isNotFound());
+    }
+
+    @Transactional
     @DisplayName("Customer: Patch")
     @Test
     void testPatchCustomer() throws Exception {
@@ -108,6 +125,30 @@ public class CustomerControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.name.firstName", equalTo("Patch Updated")))
                 .andExpect(jsonPath("$.name.lastName", equalTo("Patch Updated2")))
                 .andExpect(jsonPath("$.paymentMethods[0].displayName", equalTo("Patch NEW NAME")));
+    }
+
+    @Transactional
+    @DisplayName("Customer: Patch Not Found")
+    @Test
+    void testPatchCustomerNotFound() throws Exception {
+        Customer customer = customerRepository.findAll().iterator().next();
+
+        CustomerPatchDto customerPatch = CustomerPatchDto.builder()
+                .name(CustomerNamePatchDto.builder()
+                        .firstName("Patch Updated")
+                        .lastName("Patch Updated2")
+                        .build())
+                .paymentMethods(Collections.singletonList(CustomerPaymentMethodPatchDto.builder()
+                        .id(customer.getPaymentMethods().get(0).getId())
+                        .displayName("Patch NEW NAME")
+                        .build()))
+                .build();
+
+        mockMvc.perform(patch(CustomerController.BASE_PATH + "/{customerId}", UUID.randomUUID())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerPatch)))
+                .andExpect(status().isNotFound());
     }
 
     @DisplayName("Customer: Delete")

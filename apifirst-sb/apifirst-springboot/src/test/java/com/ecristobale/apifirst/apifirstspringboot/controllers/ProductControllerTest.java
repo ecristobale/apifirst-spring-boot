@@ -49,6 +49,23 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.description", equalTo("Updated Description")));
     }
 
+    @Transactional
+    @DisplayName("Product: Update Not Found")
+    @Test
+    void testUpdateProductNotFound() throws Exception {
+
+        Product product = productRepository.findAll().iterator().next();
+
+        ProductUpdateDto productUpdateDto = productMapper.productToProductUpdateDto(product);
+
+        productUpdateDto.setDescription("Updated Description");
+
+        mockMvc.perform(put(ProductController.BASE_PATH + "/{productId}", UUID.randomUUID())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productUpdateDto)))
+                .andExpect(status().isNotFound());
+    }
+
     @DisplayName("Product: Get List")
     @Test
     void listProducts() throws Exception {
@@ -91,6 +108,23 @@ class ProductControllerTest extends BaseTest {
                         .content(objectMapper.writeValueAsString(productPatchDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description", equalTo("PATCH Updated Description")));
+    }
+
+    @Transactional
+    @DisplayName("Product: Patch Not Found")
+    @Test
+    void testPatchProductNotFound() throws Exception {
+
+        Product product = productRepository.findAll().iterator().next();
+
+        ProductPatchDto productPatchDto = productMapper.productToProductPatchDto(product);
+
+        productPatchDto.setDescription("PATCH Updated Description");
+
+        mockMvc.perform(patch(ProductController.BASE_PATH + "/{productId}", UUID.randomUUID())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productPatchDto)))
+                .andExpect(status().isNotFound());
     }
 
     @DisplayName("Product: Delete")
