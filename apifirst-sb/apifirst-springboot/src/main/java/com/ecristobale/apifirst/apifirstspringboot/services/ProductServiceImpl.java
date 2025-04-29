@@ -2,6 +2,7 @@ package com.ecristobale.apifirst.apifirstspringboot.services;
 
 import com.ecristobale.apifirst.apifirstspringboot.domain.Product;
 import com.ecristobale.apifirst.apifirstspringboot.mappers.ProductMapper;
+import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.ProductRepository;
 import com.ecristobale.apifirst.model.ProductCreateDto;
 import com.ecristobale.apifirst.model.ProductDto;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final OrderRepository orderRepository;
 
     @Override
     public List<ProductDto> listProducts() {
@@ -56,7 +58,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(UUID productId) {
-        productRepository.findById(productId).ifPresentOrElse(productRepository::delete, () -> {
+        productRepository.findById(productId).ifPresentOrElse(product -> {
+            if (!orderRepository.findAllByOrderLines_Product(product).isEmpty()) {
+                throw new ConflictException("Product is used in orders");
+            }
+            productRepository.deleteById(productId);
+        }, () -> {
             throw new NotFoundException("Product Not Found");
         });
     }

@@ -146,6 +146,13 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("Product: Delete Conflict With Orders")
+    void testDeleteConflictProductHasOrders() throws Exception {
+        mockMvc.perform(delete(ProductController.BASE_PATH + "/{productId}", testProduct.getId()))
+                .andExpect(status().isConflict());
+    }
+
     private ProductCreateDto buildTestProductDto() {
         return ProductCreateDto.builder()
                 .description("New Product")
