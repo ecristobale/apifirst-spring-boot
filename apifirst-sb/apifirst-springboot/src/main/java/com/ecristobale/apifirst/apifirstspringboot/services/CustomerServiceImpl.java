@@ -3,6 +3,7 @@ package com.ecristobale.apifirst.apifirstspringboot.services;
 import com.ecristobale.apifirst.apifirstspringboot.domain.Customer;
 import com.ecristobale.apifirst.apifirstspringboot.mappers.CustomerMapper;
 import com.ecristobale.apifirst.apifirstspringboot.repositories.CustomerRepository;
+import com.ecristobale.apifirst.apifirstspringboot.repositories.OrderRepository;
 import com.ecristobale.apifirst.model.CustomerDto;
 import com.ecristobale.apifirst.model.CustomerPatchDto;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.stream.StreamSupport;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final OrderRepository orderRepository;
     private final CustomerMapper customerMapper;
 
     @Override
@@ -62,7 +64,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     @Override
     public void deleteCustomer(UUID customerId) {
-        customerRepository.findById(customerId).ifPresentOrElse(customerRepository::delete, () -> {
+        customerRepository.findById(customerId).ifPresentOrElse(customer -> {
+            if (!orderRepository.findAllByCustomer(customer).isEmpty()) {
+                throw new ConflictException("Customer has orders");
+            }
+            customerRepository.delete(customer);
+        }, () -> {
             throw new NotFoundException("Customer Not Found");
         });
     }
