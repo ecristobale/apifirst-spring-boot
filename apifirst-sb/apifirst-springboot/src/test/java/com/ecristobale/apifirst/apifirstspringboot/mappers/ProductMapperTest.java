@@ -24,7 +24,7 @@ public class ProductMapperTest {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @DisplayName("Test product mapper")
+    @DisplayName("Mapper: Product")
     @Test
     void productDtoToProduct() {
 

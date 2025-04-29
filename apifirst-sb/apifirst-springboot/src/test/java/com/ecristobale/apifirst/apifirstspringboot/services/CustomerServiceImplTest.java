@@ -28,7 +28,7 @@ public class CustomerServiceImplTest {
     CustomerRepository customerRepository;
 
     @Transactional
-    @DisplayName("Test Customer Service method: save")
+    @DisplayName("Customer Service: save")
     @Test
     void saveNewCustomer() {
         CustomerDto customerDto = createCustomerDTO();

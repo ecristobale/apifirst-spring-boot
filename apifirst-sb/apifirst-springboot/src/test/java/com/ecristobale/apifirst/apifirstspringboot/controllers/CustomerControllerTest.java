@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class CustomerControllerTest extends BaseTest {
 
-    @DisplayName("Test List Customers")
+    @DisplayName("Customer: List")
     @Test
     void TestListCustomers() throws Exception {
         mockMvc.perform(get(CustomerController.BASE_PATH)
@@ -33,7 +33,7 @@ public class CustomerControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.length()", greaterThan(0)));
     }
 
-    @DisplayName("Test Get Customer by ID")
+    @DisplayName("Customer: Get by ID")
     @Test
     void TestGetCustomerById() throws Exception {
         mockMvc.perform(get(CustomerController.BASE_PATH + "/{customerId}", testCustomer.getId())
@@ -42,7 +42,15 @@ public class CustomerControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.id").value(testCustomer.getId().toString()));
     }
 
-    @DisplayName("Test Create Customer")
+    @DisplayName("Customer: Get by Id Not Found")
+    @Test
+    void testGetCustomerByIdNotFound() throws Exception {
+        mockMvc.perform(get(CustomerController.BASE_PATH + "/{customerId}", UUID.randomUUID())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @DisplayName("Customer: Create")
     @Test
     void testCreateCustomer() throws Exception {
         CustomerDto newCustomer = buildTestCustomerDto();
@@ -56,7 +64,7 @@ public class CustomerControllerTest extends BaseTest {
 
     //test update customer
     @Transactional
-    @DisplayName("Test Update Customer")
+    @DisplayName("Customer: Update")
     @Test
     void testUpdateCustomer() throws Exception {
         Customer customer = customerRepository.findAll().iterator().next();
@@ -76,7 +84,7 @@ public class CustomerControllerTest extends BaseTest {
     }
 
     @Transactional
-    @DisplayName("Test Patch Customer")
+    @DisplayName("Customer: Patch")
     @Test
     void testPatchCustomer() throws Exception {
         Customer customer = customerRepository.findAll().iterator().next();
@@ -102,7 +110,7 @@ public class CustomerControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.paymentMethods[0].displayName", equalTo("Patch NEW NAME")));
     }
 
-    @DisplayName("Test Delete Customer")
+    @DisplayName("Customer: Delete")
     @Test
     void testDeleteCustomer() throws Exception {
         CustomerDto customer = buildTestCustomerDto();
@@ -115,7 +123,7 @@ public class CustomerControllerTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Test Delete Customer Not Found")
+    @DisplayName("Customer: Delete Not Found")
     void testDeleteNotFound() throws Exception {
         mockMvc.perform(delete(CustomerController.BASE_PATH + "/{customerId}", UUID.randomUUID()))
                 .andExpect(status().isNotFound());

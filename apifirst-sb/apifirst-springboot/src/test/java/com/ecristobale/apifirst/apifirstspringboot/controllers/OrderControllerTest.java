@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class OrderControllerTest extends BaseTest {
 
-    @DisplayName("Test List Products")
+    @DisplayName("Order: List")
     @Test
     void listOrders() throws Exception {
         mockMvc.perform(get(OrderController.BASE_PATH)
@@ -29,7 +29,7 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.length()", greaterThan(0)));
     }
 
-    @DisplayName("Test Get Order by ID")
+    @DisplayName("Order: Get by ID")
     @Test
     void testGetOrderById() throws Exception {
         mockMvc.perform(get(OrderController.BASE_PATH + "/{orderId}", testOrder.getId())
@@ -38,7 +38,15 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.id").value(testOrder.getId().toString()));
     }
 
-    @DisplayName("Test Create Order")
+    @DisplayName("Order: Get by ID Not Found")
+    @Test
+    void testGetOrderByIdNotFound() throws Exception {
+        mockMvc.perform(get(OrderController.BASE_PATH + "/{orderId}", UUID.randomUUID())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @DisplayName("Order: Create")
     @Test
     @Transactional
     void testCreateOrder() throws Exception {
@@ -53,7 +61,7 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(header().exists("Location"));
     }
 
-    @DisplayName("Test Update Order")
+    @DisplayName("Order: Update")
     @Test
     @Transactional
     void testUpdateOrder() throws Exception {
@@ -74,7 +82,7 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(222)));
     }
 
-    @DisplayName("Test Patch Order")
+    @DisplayName("Order: Patch")
     @Test
     @Transactional
     void testPatchOrder() throws Exception {
@@ -97,7 +105,7 @@ public class OrderControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.orderLines[0].orderQuantity", equalTo(333)));
     }
 
-    @DisplayName("Test Delete Order")
+    @DisplayName("Order: Delete")
     @Test
     @Transactional
     void testDeleteOrder() throws Exception {
@@ -111,7 +119,7 @@ public class OrderControllerTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Test Delete Order Not Found")
+    @DisplayName("Order: Delete Not Found")
     void testDeleteNotFound() throws Exception {
         mockMvc.perform(delete(OrderController.BASE_PATH + "/{orderId}", UUID.randomUUID()))
                 .andExpect(status().isNotFound());

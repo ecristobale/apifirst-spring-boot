@@ -17,7 +17,7 @@ public class ProductRepositoryTest {
     ProductRepository productRepository;
 
     @Transactional
-    @DisplayName("Test Product Repository: Persistence of Image")
+    @DisplayName("Product Repository: Image Persistence")
     @Test
     void testImagePersistence() {
         // add CascadeType ALL and FetchType.EAGER to images in product

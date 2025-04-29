@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class ProductControllerTest extends BaseTest {
 
-    @DisplayName("Test Create Product")
+    @DisplayName("Product: Create")
     @Test
     void testCreateProduct() throws Exception {
         ProductCreateDto newProduct = buildTestProductDto();
@@ -32,7 +32,7 @@ class ProductControllerTest extends BaseTest {
     }
 
     @Transactional
-    @DisplayName("Test Update Product")
+    @DisplayName("Product: Update")
     @Test
     void testUpdateProduct() throws Exception {
 
@@ -49,7 +49,7 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.description", equalTo("Updated Description")));
     }
 
-    @DisplayName("Test Get List Products")
+    @DisplayName("Product: Get List")
     @Test
     void listProducts() throws Exception {
         mockMvc.perform(get(ProductController.BASE_PATH)
@@ -58,7 +58,7 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.length()", greaterThan(0)));
     }
 
-    @DisplayName("Test Get Product by ID")
+    @DisplayName("Product: Get by ID")
     @Test
     void getProductById() throws Exception {
         mockMvc.perform(get(ProductController.BASE_PATH + "/{productId}", testProduct.getId())
@@ -67,8 +67,16 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.id", equalTo(testProduct.getId().toString())));
     }
 
+    @DisplayName("Product: Get by ID Not Found")
+    @Test
+    void getProductByIdNotFound() throws Exception {
+        mockMvc.perform(get(ProductController.BASE_PATH + "/{productId}", UUID.randomUUID())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     @Transactional
-    @DisplayName("Test Patch Product")
+    @DisplayName("Product: Patch")
     @Test
     void testPatchProduct() throws Exception {
 
@@ -85,7 +93,7 @@ class ProductControllerTest extends BaseTest {
                 .andExpect(jsonPath("$.description", equalTo("PATCH Updated Description")));
     }
 
-    @DisplayName("Test Delete Product")
+    @DisplayName("Product: Delete")
     @Test
     void testDeleteProduct() throws Exception {
         ProductCreateDto product = buildTestProductDto();
@@ -98,7 +106,7 @@ class ProductControllerTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Test Delete Product Not Found")
+    @DisplayName("Product: Delete Not Found")
     void testDeleteProductNotFound() throws Exception {
         mockMvc.perform(delete(ProductController.BASE_PATH + "/{productId}", UUID.randomUUID()))
                 .andExpect(status().isNotFound());

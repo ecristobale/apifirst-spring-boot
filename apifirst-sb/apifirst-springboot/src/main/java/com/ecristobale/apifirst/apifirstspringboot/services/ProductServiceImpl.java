@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(UUID productId) {
-        return productMapper.productToProductDto(productRepository.findById(productId).orElseThrow());
+        return productMapper.productToProductDto(productRepository.findById(productId).orElseThrow(NotFoundException::new));
     }
 
     @Override
